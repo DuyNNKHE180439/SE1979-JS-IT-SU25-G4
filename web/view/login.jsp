@@ -3,7 +3,7 @@
     Created on : May 20, 2025, 11:37:23 PM
     Author     : Admin
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -34,11 +34,11 @@
                         <img src="images/logo.png" alt="Logo">
                     </div>
 
-                    <form class="login100-form validate-form">
+                    <form class="login100-form validate-form" action="Login" method="POST">
 
 
-                        <div class="wrap-input100 validate-input" data-validate = "Valid email is required: abc@gmail.com">
-                            <input class="input100" type="text" name="email" placeholder="Email">
+                        <div class="wrap-input100 " data-validate = "Username or Email is required">
+                            <input class="input100" type="text" name="email" placeholder="Email or User Name">
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -54,7 +54,7 @@
                         </div>
 
                         <div class="container-login100-form-btn">
-                            <button class="login100-form-btn">
+                            <button class="login100-form-btn" type="submit">
                                 Login
                             </button>
                         </div>
@@ -76,17 +76,20 @@
                                 <span>Sign in with Google</span>
                             </a>
                         </div>
-
-
+<br>
+                        <c:if test="${not empty error}">
+                            <div class="alert alert-danger">${error}</div>
+                        </c:if>
                         <div class="text-center p-t-136">
-                            <a class="txt2" href="#">
+                            <a class="txt2" href="#" id="to-register">
                                 Create your Account
                                 <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                             </a>
                         </div>
 
                     </form>
-
+                    <!--demo form sign up-->
+                    
                 </div>
             </div>
         </div>
@@ -105,5 +108,6 @@
         </script>
         <!--===============================================================================================-->
         <script src="js/main.js"></script>
+        
     </body>
 </html>
