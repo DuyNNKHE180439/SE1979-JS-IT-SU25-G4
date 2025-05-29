@@ -37,7 +37,7 @@
                     <form class="login100-form validate-form" action="Login" method="POST">
 
 
-                        <div class="wrap-input100 " data-validate = "Username or Email is required">
+                        <div class="wrap-input100 validate-input" data-validate = "Username or Email is required">
                             <input class="input100" type="text" name="email" placeholder="Email or User Name">
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
@@ -101,13 +101,13 @@
         <script src="vendor/select2/select2.min.js"></script>
         <!--===============================================================================================-->
         <script src="vendor/tilt/tilt.jquery.min.js"></script>
-        <script >
+        <script>
             $('.js-tilt').tilt({
                 scale: 1.1
             })
         </script>
         <!--===============================================================================================-->
         <script src="js/main.js"></script>
-        
+         
     </body>
 </html>
