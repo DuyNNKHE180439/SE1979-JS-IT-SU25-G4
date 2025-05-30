@@ -34,23 +34,38 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String code = request.getParameter("code");
-        GoogleLogin gg = new GoogleLogin();
-        String accessToken = gg.getToken(code);
-        GoogleAccount acc = gg.getUserInfo(accessToken);
-        User user = UserDAO.getUserByEmail(acc.getEmail());
+        try (PrintWriter out = response.getWriter()) {
+            String code = request.getParameter("code");
+            GoogleLogin gg = new GoogleLogin();
+            String accessToken = gg.getToken(code);
+            GoogleAccount acc = gg.getUserInfo(accessToken);
+            User user = UserDAO.getUserByEmail(acc.getEmail());
 
-        if (user == null) {
-            String error = "Not match username and password!";
-            request.setAttribute("error", error);
-            RequestDispatcher rs = request.getRequestDispatcher("view/login.jsp");
-            rs.forward(request, response);
-        } else {
-
-            // Đăng nhập thành công
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user);
-            response.sendRedirect("user");
+            if (user == null) {
+                String error = "Not match username and password!";
+                request.setAttribute("error", error);
+                RequestDispatcher rs = request.getRequestDispatcher("view/login.jsp");
+                rs.forward(request, response);
+            } else {
+                // Đăng nhập thành công
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
+                 int role = user.getRoleId();
+                switch (role) {  // phan quyen chuyen trang tai day 1
+                    case 1:
+                        out.println("Bạn là ADMIN");
+                        return;
+                    case 2:
+                        out.println("Bạn là STUDENT");
+                        return;
+                    case 3:
+                        out.println("Bạn là MANAGER");
+                        return;
+                    default:
+                        response.sendRedirect("login.jsp");
+                        return;
+                }
+            }
         }
     }
 
@@ -67,18 +82,35 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // processRequest(request, response);
-        String code = request.getParameter("code");
-        if (code != null) {
-            processRequest(request, response);
-            return; 
-        }
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            RequestDispatcher rs = request.getRequestDispatcher("view/login.jsp");
-            rs.forward(request, response);
-        } else {
-            response.sendRedirect("user");
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            String code = request.getParameter("code");
+            if (code != null) {
+                processRequest(request, response);
+                return;
+            }
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
+            if (user == null) {
+                RequestDispatcher rs = request.getRequestDispatcher("view/login.jsp");
+                rs.forward(request, response);
+            } else {
+                 int role = user.getRoleId();
+                switch (role) {  // phan quyen chuyen trang tai day 2
+                    case 1:
+                        out.println("Bạn là ADMIN");
+                        return;
+                    case 2:
+                        out.println("Bạn là STUDENT");
+                        return;
+                    case 3:
+                        out.println("Bạn là MANAGER");
+                        return;
+                    default:
+                        response.sendRedirect("login.jsp");
+                        return;
+                }
+            }
         }
     }
 
@@ -107,7 +139,21 @@ public class LoginServlet extends HttpServlet {
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                response.sendRedirect("user");
+                int role = user.getRoleId();
+                switch (role) { // phan quyen chuyen trang tai day 3
+                    case 1:
+                        out.println("Bạn là ADMIN");
+                        return;
+                    case 2:
+                        out.println("Bạn là STUDENT");
+                        return;
+                    case 3:
+                        out.println("Bạn là MANAGER");
+                        return;
+                    default:
+                        response.sendRedirect("login.jsp");
+                        return;
+                }
             }
         }
     }
