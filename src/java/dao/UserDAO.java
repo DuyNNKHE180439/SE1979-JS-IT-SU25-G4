@@ -92,6 +92,41 @@ public class UserDAO {
         }
     }
 
+    public static User getUserById(int id) {
+        DBContext db = DBContext.getInstance();
+        User user = null;
+
+        try {
+            String sql = """
+                        SELECT* FROM dbo.Users WHERE UserID=?
+                        """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                user = new User();
+                user.setUserId(rs.getInt("UserID"));
+                user.setUserName(rs.getString("Username"));
+                user.setPassWord(rs.getString("Password"));
+                user.setEmail(rs.getString("Email"));
+                user.setRoleId(rs.getInt("RoleID"));
+                user.setStatus(rs.getString("Status"));
+                user.setFirstName(rs.getString("FirstName"));
+                user.setLastName(rs.getString("LastName"));
+                user.setDateOfBirth(rs.getString("DateOfBirth"));
+                user.setGender(rs.getString("Gender"));
+                user.setPhoneNumber(rs.getString("PhoneNumber"));
+                user.setAddressId(rs.getInt("AddressID"));
+                user.setCreatedAt(rs.getString("CreatedAt"));
+                user.setUpdatedAt(rs.getString("UpdatedAt"));
+
+            }
+            return user;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public static User registerUser(User user, Address address) {
         DBContext db = DBContext.getInstance();
         User registeredUser = null;
@@ -186,7 +221,8 @@ public class UserDAO {
 
         return registeredUser;
     }
-     public static User getUserByUserName(String userName) {
+
+    public static User getUserByUserName(String userName) {
         DBContext db = DBContext.getInstance();
         User user = null;
 
@@ -220,7 +256,8 @@ public class UserDAO {
             return null;
         }
     }
-      public static User getUserByPhoneNumber(String phoneNumber) {
+
+    public static User getUserByPhoneNumber(String phoneNumber) {
         DBContext db = DBContext.getInstance();
         User user = null;
 
@@ -252,6 +289,19 @@ public class UserDAO {
             return user;
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    public static void updatePassword(String email, String password) {
+        DBContext db = DBContext.getInstance();
+        String sql = "UPDATE dbo.Users SET Password=? WHERE Email=?";
+        try {
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setString(1, password);
+            st.setString(2, email);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
         }
     }
 

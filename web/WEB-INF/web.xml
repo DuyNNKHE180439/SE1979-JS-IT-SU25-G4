@@ -28,6 +28,18 @@
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>controller.RegisterServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>requestPassword</servlet-name>
+        <servlet-class>controller.requestPassword</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>resetPassword</servlet-name>
+        <servlet-class>controller.resetPassword</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>resetService</servlet-name>
+        <servlet-class>controller.resetService</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -55,6 +67,18 @@
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/Register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>requestPassword</servlet-name>
+        <url-pattern>/requestPassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>resetPassword</servlet-name>
+        <url-pattern>/resetPassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>resetService</servlet-name>
+        <url-pattern>/resetService</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>view/login.jsp</welcome-file>

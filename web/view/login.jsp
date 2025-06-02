@@ -97,7 +97,7 @@
                             <span class="txt1">
                                 Quên
                             </span>
-                            <a class="txt2" href="#">
+                            <a class="txt2" href="requestPassword">
                                 Tài khoản / Mật khẩu?
                             </a>
                         </div>
