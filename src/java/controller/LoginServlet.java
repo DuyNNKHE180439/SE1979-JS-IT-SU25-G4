@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
             User user = UserDAO.getUserByEmail(acc.getEmail());
 
             if (user == null) {
-                String error = "Not match username and password!";
+                String error = "Sai tên tài khoản hoặc mật khẩu!";
                 request.setAttribute("error", error);
                 RequestDispatcher rs = request.getRequestDispatcher("view/login.jsp");
                 rs.forward(request, response);
@@ -106,9 +106,7 @@ public class LoginServlet extends HttpServlet {
                     case 3:
                         out.println("Bạn là MANAGER");
                         return;
-                    default:
-                        response.sendRedirect("login.jsp");
-                        return;
+                   // tại đay tưng có 1 default chuyển về login.jsp
                 }
             }
         }
@@ -130,9 +128,10 @@ public class LoginServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String loginId = request.getParameter("email");
             String password = request.getParameter("pass");
+            String action= request.getParameter("action");
             User user = UserDAO.getUserByLoginIdAndPassword(loginId, password);
             if (user == null) {
-                String error = "Not match username and password!";
+                String error = "Sai tên tài khoản hoặc mật khẩu!";
                 request.setAttribute("error", error);
                 RequestDispatcher rs = request.getRequestDispatcher("view/login.jsp");
                 rs.forward(request, response);
@@ -155,6 +154,7 @@ public class LoginServlet extends HttpServlet {
                         return;
                 }
             }
+            
         }
     }
 

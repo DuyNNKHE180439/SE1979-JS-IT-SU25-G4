@@ -3,12 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/view/login.jsp</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/vendor/select2/select2.min.js</file>
+            <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/view/login.jsp</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/LoginServlet.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/ManagerServlet.java</file>
-            <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/filter/AuthFilter.java</file>
+            <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/model/Address.java</file>
+            <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/view/signup.jsp</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/vendor/select2/select2.css</file>
+            <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/RegisterServlet.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/css/main.css</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/vendor/jquery/jquery-3.2.1.min.js</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/vendor/animate/animate.css</file>
@@ -17,6 +19,8 @@
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/StudentServlet.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/vendor/select2/select2.min.css</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/LogoutServlet.java</file>
+            <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/dao/UserDAO.java</file>
+            <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/dao/DBContext.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/UserServlet.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/js/main.js</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/css/util.css</file>
