@@ -121,7 +121,7 @@ public class ListRoomServlet extends HttpServlet {
         if (success) {
             response.sendRedirect("rooms?action=list");
         } else {
-            request.setAttribute("error", "Tạo phòng thất bại");
+            request.setAttribute("error", "Fail to create new room");
             request.getRequestDispatcher("roomForm.jsp").forward(request, response);
         }
     }
