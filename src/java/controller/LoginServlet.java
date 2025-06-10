@@ -56,10 +56,10 @@ public class LoginServlet extends HttpServlet {
                         out.println("Bạn là ADMIN");
                         return;
                     case 2:
-                        out.println("Bạn là STUDENT");
+                        response.sendRedirect("view/studentHome.jsp");
                         return;
                     case 3:
-                        out.println("Bạn là MANAGER");
+                        response.sendRedirect("rooms");
                         return;
                     default:
                         response.sendRedirect("login.jsp");
@@ -101,10 +101,10 @@ public class LoginServlet extends HttpServlet {
                         out.println("Bạn là ADMIN");
                         return;
                     case 2:
-                        out.println("Bạn là STUDENT");
+                        response.sendRedirect("view/studentHome.jsp");
                         return;
                     case 3:
-                        out.println("Bạn là MANAGER");
+                        response.sendRedirect("rooms");
                         return;
                    // tại đay tưng có 1 default chuyển về login.jsp
                 }
@@ -144,10 +144,10 @@ public class LoginServlet extends HttpServlet {
                         out.println("Bạn là ADMIN");
                         return;
                     case 2:
-                        out.println("Bạn là STUDENT");
+                        response.sendRedirect("view/studentHome.jsp");
                         return;
                     case 3:
-                        out.println("Bạn là MANAGER");
+                        response.sendRedirect("rooms");
                         return;
                     default:
                         response.sendRedirect("login.jsp");
