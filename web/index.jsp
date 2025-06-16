@@ -44,7 +44,7 @@
           </style>
       </head>
       <body class="skin-black">
-        <!-- header logo: style can be found in header.less -->
+        <!-- header logo: styl can be found in header.less -->
         <header class="header">
             <a href="index.html" class="logo">
                 Director
