@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @WebServlet(name = "RoomServlet", urlPatterns = {"/room"})
 public class RoomServlet extends HttpServlet {
 
-    private static final int ROOMS_PER_PAGE = 8;
+    private static final int ROOMS_PER_PAGE = 6;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
