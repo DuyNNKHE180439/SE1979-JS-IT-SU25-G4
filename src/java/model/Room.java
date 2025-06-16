@@ -1,28 +1,31 @@
 package model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Room {
 
-    private int roomID;  // thêm trường id
+    private int roomID;
     private String roomNumber;
     private int capacity;
     private Integer currentOccupancy;
     private String status;
     private Timestamp createdAt;
     private Timestamp updatedAt;
+    private String roomImagePath;
+    private List<Bed> beds;
 
-    // Constructor có id
-    public Room(int roomID, String roomNumber, int capacity, Integer currentOccupancy, String status) {
-        this.roomID = roomID;
-        this.roomNumber = roomNumber;
-        this.capacity = capacity;
-        this.currentOccupancy = currentOccupancy;
-        this.status = status;
+    public List<Bed> getBeds() {
+        return beds;
     }
 
-    // Constructor có id và thời gian tạo, cập nhật
-    public Room(int roomID, String roomNumber, int capacity, Integer currentOccupancy, String status, Timestamp createdAt, Timestamp updatedAt) {
+    public void setBeds(List<Bed> beds) {
+        this.beds = beds;
+    }
+
+    // === Constructors ===
+    // Constructor có ID + đầy đủ thời gian + ảnh
+    public Room(int roomID, String roomNumber, int capacity, Integer currentOccupancy, String status, Timestamp createdAt, Timestamp updatedAt, String roomImagePath) {
         this.roomID = roomID;
         this.roomNumber = roomNumber;
         this.capacity = capacity;
@@ -30,21 +33,33 @@ public class Room {
         this.status = status;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.roomImagePath = roomImagePath;
     }
 
-    // Constructor không có id (vd dùng khi tạo mới, id do DB tạo)
-    public Room(String roomNumber, int capacity, Integer currentOccupancy, String status) {
+    // Constructor có ID không thời gian nhưng có ảnh
+    public Room(int roomID, String roomNumber, int capacity, Integer currentOccupancy, String status, String roomImagePath) {
+        this.roomID = roomID;
         this.roomNumber = roomNumber;
         this.capacity = capacity;
         this.currentOccupancy = currentOccupancy;
         this.status = status;
+        this.roomImagePath = roomImagePath;
+    }
+
+    // Constructor không có ID (tạo mới) có ảnh
+    public Room(String roomNumber, int capacity, Integer currentOccupancy, String status, String roomImagePath) {
+        this.roomNumber = roomNumber;
+        this.capacity = capacity;
+        this.currentOccupancy = currentOccupancy;
+        this.status = status;
+        this.roomImagePath = roomImagePath;
     }
 
     // Default constructor
     public Room() {
     }
 
-    // Getter/setter cho id
+    // === Getters and Setters ===
     public int getRoomID() {
         return roomID;
     }
@@ -53,7 +68,6 @@ public class Room {
         this.roomID = roomID;
     }
 
-    // Các getter/setter còn lại
     public String getRoomNumber() {
         return roomNumber;
     }
@@ -102,16 +116,26 @@ public class Room {
         this.updatedAt = updatedAt;
     }
 
+    public String getRoomImagePath() {
+        return roomImagePath;
+    }
+
+    public void setRoomImagePath(String roomImagePath) {
+        this.roomImagePath = roomImagePath;
+    }
+
+    // === toString ===
     @Override
     public String toString() {
         return "Room{"
-                + "id=" + roomID
+                + "roomID=" + roomID
                 + ", roomNumber='" + roomNumber + '\''
                 + ", capacity=" + capacity
                 + ", currentOccupancy=" + currentOccupancy
                 + ", status='" + status + '\''
                 + ", createdAt=" + createdAt
                 + ", updatedAt=" + updatedAt
+                + ", roomImagePath='" + roomImagePath + '\''
                 + '}';
     }
 }

@@ -264,7 +264,7 @@
             <i class="fa-solid fa-bars"></i>
         </div>
         <div class="logo">
-            <img src="../images/logo.png" alt="On Campus Dormitory Logo" />
+            <img src="${pageContext.request.contextPath}/images/logo.png" alt="On Campus Dormitory Logo" />
         </div>
         <div class="notification" id="notification">
             <i class="fa-solid fa-bell"></i>
@@ -285,33 +285,7 @@
         </div>
     </div>
 
-    <div class="sidebar" id="sidebar">
-        <div class="profile">
-            <table>
-                <tr>
-                    <td><img src="../images/FrogSleep.png" alt="User Avatar" /></td>
-                    <td>
-                        <p><span class="title">Hoang Van Dai </span></p>
-                        <p><span class="title">Gender:</span> Male</p>
-                        <p><span class="title">RollName:</span> HE180375</p>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="menu">
-            <a href="#" class="active"><i class="fa-solid fa-house"></i> Home</a>
-            <a href="#"><i class="fa-solid fa-bell"></i> News</a>
-            <a href="#"><i class="fa-solid fa-clock"></i> Resident History</a>
-            <a href="#"><i class="fa-solid fa-bed"></i> Bookings</a>
-            <a href="#"><i class="fa-solid fa-plug"></i> Electricity Water Usage</a>
-            <a href="#"><i class="fa-solid fa-dollar-sign"></i> Payment</a>
-            <a href="#"><i class="fa-solid fa-file-alt"></i> My Request</a>
-            <a href="#"><i class="fa-solid fa-ticket-alt"></i> Parking Ticket</a>
-        </div>
-        <div class="logout">
-            <a href="../Logout">Đăng xuất</a>
-        </div>
-    </div>
+    <jsp:include page="slider.jsp" />
 
     <div class="main" id="main">
         <div class="header">
