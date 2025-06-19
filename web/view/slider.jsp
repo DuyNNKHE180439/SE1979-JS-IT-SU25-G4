@@ -29,11 +29,10 @@
         <a href="${pageContext.request.contextPath}/user?action=viewProfile"><i class="fa-solid fa-file-alt"></i> Thông Tin Cá Nhân</a>
         <a href="#"><i class="fa-solid fa-bell"></i> Bảng Tin</a>
         <a href="#"><i class="fa-solid fa-clock"></i> Lịch Sử Cư Trú</a>
-        <a href="${pageContext.request.contextPath}/room"><i class="fa-solid fa-bed"></i> Rooms</a>
-        <a href="${pageContext.request.contextPath}/register-list"><i class="fa-solid fa-file-alt"></i> Bed Request</a>
+        <a href="${pageContext.request.contextPath}/room"><i class="fa-solid fa-bed"></i> Đặt Phòng</a>
+        <a href="${pageContext.request.contextPath}/register-list"><i class="fa-solid fa-file-alt"></i> Yêu Cầu Của Tôi</a>
         <a href="#"><i class="fa-solid fa-plug"></i> Điện Nước Sử Dụng</a>
         <a href="#"><i class="fa-solid fa-dollar-sign"></i> Thanh Toán</a>
-        <a href="#"><i class="fa-solid fa-file-alt"></i> Yêu Cầu Của Tôi</a>
     </div>
     <div class="logout">
         <a href="${pageContext.request.contextPath}/Logout">Đăng Xuất</a>
