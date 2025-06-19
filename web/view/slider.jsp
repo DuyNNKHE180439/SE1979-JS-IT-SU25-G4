@@ -4,40 +4,38 @@
     Author     : ADMIN
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <div class="sidebar" id="sidebar">
-            <div class="profile">
-                <table>
-                    <tr>
-                        <td><img src="${pageContext.request.contextPath}/images/FrogSleep.png" alt="User Avatar" /></td>
-                        <td>
-                            <p><span class="title">Hoang Van Dai </span></p>
-                            <p><span class="title">Gender:</span> Male</p>
-                            <p><span class="title">RollName:</span> HE180375</p>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="menu">
-                <a href="#"><i class="fa-solid fa-house"></i> Home</a>
-                <a href="#"><i class="fa-solid fa-bell"></i> News</a>
-                <a href="#"><i class="fa-solid fa-clock"></i> Resident History</a>
-                <a href="${pageContext.request.contextPath}/room"><i class="fa-solid fa-bed"></i> Rooms</a>
-                <a href="${pageContext.request.contextPath}/register-list"><i class="fa-solid fa-file-alt"></i> Bed Request</a>
-                <a href="#"><i class="fa-solid fa-plug"></i> Electricity Water Usage</a>
-                <a href="#"><i class="fa-solid fa-dollar-sign"></i> Payment</a>
-                <a href="#"><i class="fa-solid fa-ticket-alt"></i> Parking Ticket</a>
-            </div>
-            <div class="logout">
-                <a href="${pageContext.request.contextPath}/Logout">Đăng xuất</a>
-            </div>
-        </div>
-    </body>
-</html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<div class="sidebar" id="sidebar">
+    <div class="profile">
+        <table>
+            <tr>
+                <td><img src="${pageContext.request.contextPath}/images/FrogSleep.png" alt="Ảnh Đại Diện"></td>
+                <td>
+                    <p><span class="title">${user.firstName} ${user.lastName}</span></p>
+                    <p><span class="title">Giới tính: </span>${user.gender}</p>
+                    <p><span class="title">Ngày sinh: </span>
+                        <fmt:parseDate value="${user.dateOfBirth}" pattern="yyyy-MM-dd HH:mm:ss.S" var="parsedDate" />
+                        <fmt:formatDate value="${parsedDate}" pattern="dd/MM/yyyy" />
+                    </p>
+                    <p><span class="title">SĐT: </span>${user.phoneNumber}</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="menu">
+        <a href="${pageContext.request.contextPath}/view/studentHome.jsp"><i class="fa-solid fa-house"></i> Trang Chủ</a>
+        <a href="${pageContext.request.contextPath}/user?action=viewProfile"><i class="fa-solid fa-file-alt"></i> Thông Tin Cá Nhân</a>
+        <a href="#"><i class="fa-solid fa-bell"></i> Bảng Tin</a>
+        <a href="#"><i class="fa-solid fa-clock"></i> Lịch Sử Cư Trú</a>
+        <a href="${pageContext.request.contextPath}/room"><i class="fa-solid fa-bed"></i> Rooms</a>
+        <a href="${pageContext.request.contextPath}/register-list"><i class="fa-solid fa-file-alt"></i> Bed Request</a>
+        <a href="#"><i class="fa-solid fa-plug"></i> Điện Nước Sử Dụng</a>
+        <a href="#"><i class="fa-solid fa-dollar-sign"></i> Thanh Toán</a>
+        <a href="#"><i class="fa-solid fa-file-alt"></i> Yêu Cầu Của Tôi</a>
+    </div>
+    <div class="logout">
+        <a href="${pageContext.request.contextPath}/Logout">Đăng Xuất</a>
+    </div>
+</div>

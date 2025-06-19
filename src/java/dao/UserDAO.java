@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import model.Address;
 import model.User;
 import java.sql.Connection;
+import model.Profile;
 
 /**
  *
@@ -302,6 +303,43 @@ public class UserDAO {
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
+        }
+    }
+
+    public static Profile getUserInFoById(int userId) {
+        DBContext db = DBContext.getInstance();
+        Profile profile = null;
+
+        try {
+            String sql = """
+                        SELECT * FROM dbo.Users JOIN dbo.Students ON 
+                        Students.UserID = Users.UserID JOIN dbo.Addresses ON 
+                        Addresses.AddressID = Users.AddressID
+                        WHERE Users.UserID= ?
+                        """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setInt(1, userId);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                profile = new Profile();
+                profile.setUserId(rs.getInt("UserID"));
+                profile.setUserName(rs.getString("Username"));
+                profile.setPassword(rs.getString("Password"));
+                profile.setEmail(rs.getString("Email"));
+                profile.setImage(rs.getString("RoomImagePath"));
+                profile.setStreet(rs.getString("Street"));
+                profile.setFirstName(rs.getString("FirstName"));
+                profile.setLastName(rs.getString("LastName"));
+                profile.setDateOfBirth(rs.getString("DateOfBirth"));
+                profile.setGender(rs.getString("Gender"));
+                profile.setPhoneNumber(rs.getString("PhoneNumber"));
+                profile.setProvice(rs.getString("Province"));
+                profile.setDistrict(rs.getString("District"));
+                profile.setWard(rs.getString("Ward"));
+            }
+            return profile;
+        } catch (Exception e) {
+            return null;
         }
     }
 
