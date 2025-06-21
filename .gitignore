@@ -1,1 +1,10 @@
+# Ignore NetBeans build folders
 /build/
+/dist/
+
+# Ignore all WAR files
+*.war
+
+# Ignore other IDE junk
+nbproject/private/
+/nbbuild/
