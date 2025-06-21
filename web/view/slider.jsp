@@ -11,7 +11,16 @@
     <div class="profile">
         <table>
             <tr>
-                <td><img src="${pageContext.request.contextPath}/images/FrogSleep.png" alt="Ảnh Đại Diện"></td>
+                <td>
+                    <c:choose>
+                        <c:when test="${empty user.getImagePath()}">
+                            <img src="${pageContext.request.contextPath}/images/FrogSleep.png" alt="Ảnh mặc định" width="150">
+                        </c:when>
+                        <c:otherwise>
+                            <img src="${pageContext.request.contextPath}/${user.getImagePath()}" alt="Ảnh đại diện" width="150">
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                 <td>
                     <p><span class="title">${user.firstName} ${user.lastName}</span></p>
                     <p><span class="title">Giới tính: </span>${user.gender}</p>

@@ -4,6 +4,7 @@
     Author     : Admin
 --%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="vi">
@@ -66,18 +67,26 @@
             }
         </style>
     </head>
+    <c:if test="${not empty success}">
+        <script>
+            alert("${success}");
+        </script>
+    </c:if>
     <body class="bg-gray-100 min-h-screen">
         <div class="nav-bar">
-            <a href="javascript:history.back()" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+            <a href="${pageContext.request.contextPath}/view/studentHome.jsp" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
             <div class="logo">  
-                <img src="images/logo.png" alt="Logo">
+                <img src="${pageContext.request.contextPath}/images/logo.png" alt="Logo">
             </div>
         </div>
         <div class="subheading">Thông Tin Cá Nhân</div>
         <div class="container max-w-4xl mx-auto pt-10 pb-10 px-6 bg-white rounded-2xl shadow-lg" style="margin-top: 100px;">
             <div class="flex justify-center mb-6">
-                <img src="images/FrogSleep.png" alt="Ảnh Đại Diện" class="w-32 h-32 rounded-full object-cover border-4 border-indigo-100 hover:scale-105 transition-transform duration-300">
+                <img src="${profile.image != null ? profile.image : pageContext.request.contextPath + '/images/FrogSleep.png'}"
+                     alt="Ảnh Đại Diện"
+                     class="w-32 h-32 rounded-full object-cover border-4 border-indigo-100 hover:scale-105 transition-transform duration-300">
             </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Tên Đăng Nhập</label>
@@ -101,7 +110,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Ngày Sinh</label>
-                    <input type="date" value="${profile.getDateOfBirth()}" disabled class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-600">
+                    <input type="date" value="${profile.dateOfBirth.substring(0, 10)}" disabled class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-600">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Giới Tính</label>

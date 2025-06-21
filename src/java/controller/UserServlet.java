@@ -12,6 +12,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import jakarta.servlet.annotation.MultipartConfig;
+import java.io.File;
 import model.Profile;
 import model.User;
 
@@ -19,6 +22,7 @@ import model.User;
  *
  * @author Admin
  */
+@MultipartConfig
 public class UserServlet extends HttpServlet {
 
     /**
@@ -60,21 +64,18 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
         String action = (String) request.getParameter("action");
         User user = (User) session.getAttribute("user");
-        if (user == null || session == null) {
+        if (user == null) {
             request.setAttribute("success", "Session hết hạn vui lòng đăng nhập lại!");
             response.sendRedirect("view/login.jsp");
             return;
         } else if (action.equalsIgnoreCase("viewProfile")) {
             Profile profile = UserDAO.getUserInFoById(user.getUserId());
-            request.setAttribute("profile", profile);
+            session.setAttribute("profile", profile);
             request.getRequestDispatcher("view/profile.jsp").forward(request, response);
         } else if (action.equalsIgnoreCase("editProfile")) {
-            Profile profile = UserDAO.getUserInFoById(user.getUserId());
-            request.setAttribute("profile", profile);
             request.getRequestDispatcher("view/editProfile.jsp").forward(request, response);
         }
     }
@@ -90,7 +91,91 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
+        if (action == null) {
+            // do nothing
+        } else if (action.equalsIgnoreCase("editProfile")) {
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            int addressId = Integer.parseInt(request.getParameter("addressId"));
+            String userName = request.getParameter("username");
+            String passWord = request.getParameter("password");
+            String email = request.getParameter("email");
+            String firstName = request.getParameter("firstName");
+            String lastName = request.getParameter("lastName");
+            String dateOfBirth = request.getParameter("dateOfBirth");
+            String gender = request.getParameter("gender");
+            String phoneNumber = request.getParameter("phoneNumber");
+            String province = request.getParameter("province");
+            String district = request.getParameter("district");
+            String ward = request.getParameter("ward");
+            String street = request.getParameter("street");
+            Part filePart = request.getPart("profilePic");
+            String originalPhone = request.getParameter("originalPhoneNumber").trim();
+            String imagePath = null;
+
+            // Phone number validation
+            if (!phoneNumber.equals(originalPhone)) {
+                if (UserDAO.getUserByPhoneNumber(phoneNumber) != null) {
+                    request.setAttribute("success", "Số điện thoại đã tồn tại");
+                    Profile profile = UserDAO.getUserInFoById(userId);
+                    request.setAttribute("profile", profile);
+                    request.getRequestDispatcher("view/editProfile.jsp").forward(request, response);
+                    return;
+                }
+            }
+
+            // Image upload
+            if (filePart != null && filePart.getSize() > 0) {
+                String fileName = System.currentTimeMillis() + "_" + filePart.getSubmittedFileName();
+                // Determine save directory: <project_root>/web/images
+                String appPath = getServletContext().getRealPath(""); // e.g., .../build/web
+                File projectRoot = new File(appPath).getParentFile().getParentFile(); // go up two levels to project root
+                String savePath = new File(projectRoot, "web" + File.separator + "images").getAbsolutePath() + File.separator;
+                File uploadDir = new File(savePath);
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdirs();
+                }
+                filePart.write(savePath + fileName);
+                imagePath = "images/" + fileName;
+            }
+
+            // Create Profile object and set properties
+            Profile profile = new Profile();
+            profile.setUserId(userId);
+            profile.setAddressId(addressId);
+            profile.setUserName(userName);
+            profile.setEmail(email);
+            profile.setPassword(passWord);
+            profile.setFirstName(firstName);
+            profile.setLastName(lastName);
+            profile.setDateOfBirth(dateOfBirth);
+            profile.setGender(gender);
+            profile.setPhoneNumber(phoneNumber);
+            profile.setProvice(province);
+            profile.setDistrict(district);
+            profile.setWard(ward);
+            profile.setStreet(street);
+            if (imagePath == null) {
+                // If no new image is uploaded, keep the old one
+                Profile oldProfile = UserDAO.getUserInFoById(userId);
+                profile.setImage(oldProfile.getImage());
+            } else {
+                profile.setImage(imagePath);
+            }
+            // Update user in DB
+            if (UserDAO.updateUserAddress(profile, addressId, userId)) {
+                HttpSession session = request.getSession();
+                session.setAttribute("profile", profile);
+                request.setAttribute("success", "Cập nhật thông tin thành công!");
+                request.getRequestDispatcher("view/profile.jsp").forward(request, response);
+            } else {
+                request.setAttribute("profile", profile);
+                request.setAttribute("success", "Cập nhật thông tin thất bại!");
+                request.getRequestDispatcher("view/profile.jsp").forward(request, response);
+            }
+        }
     }
 
     /**

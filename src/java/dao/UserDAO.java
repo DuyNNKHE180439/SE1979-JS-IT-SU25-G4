@@ -50,7 +50,7 @@ public class UserDAO {
                 user.setAddressId(rs.getInt("AddressID"));
                 user.setCreatedAt(rs.getString("CreatedAt"));
                 user.setUpdatedAt(rs.getString("UpdatedAt"));
-
+                user.setImagePath(rs.getString("RoomImagePath"));
             }
             return user;
         } catch (Exception e) {
@@ -85,7 +85,7 @@ public class UserDAO {
                 user.setAddressId(rs.getInt("AddressID"));
                 user.setCreatedAt(rs.getString("CreatedAt"));
                 user.setUpdatedAt(rs.getString("UpdatedAt"));
-
+                user.setImagePath(rs.getString("RoomImagePath"));
             }
             return user;
         } catch (Exception e) {
@@ -120,7 +120,7 @@ public class UserDAO {
                 user.setAddressId(rs.getInt("AddressID"));
                 user.setCreatedAt(rs.getString("CreatedAt"));
                 user.setUpdatedAt(rs.getString("UpdatedAt"));
-
+                user.setImagePath(rs.getString("RoomImagePath"));
             }
             return user;
         } catch (Exception e) {
@@ -250,7 +250,7 @@ public class UserDAO {
                 user.setAddressId(rs.getInt("AddressID"));
                 user.setCreatedAt(rs.getString("CreatedAt"));
                 user.setUpdatedAt(rs.getString("UpdatedAt"));
-
+                user.setImagePath(rs.getString("RoomImagePath"));
             }
             return user;
         } catch (Exception e) {
@@ -285,7 +285,7 @@ public class UserDAO {
                 user.setAddressId(rs.getInt("AddressID"));
                 user.setCreatedAt(rs.getString("CreatedAt"));
                 user.setUpdatedAt(rs.getString("UpdatedAt"));
-
+                user.setImagePath(rs.getString("RoomImagePath"));
             }
             return user;
         } catch (Exception e) {
@@ -323,6 +323,7 @@ public class UserDAO {
             if (rs.next()) {
                 profile = new Profile();
                 profile.setUserId(rs.getInt("UserID"));
+                profile.setAddressId(rs.getInt("AddressID"));
                 profile.setUserName(rs.getString("Username"));
                 profile.setPassword(rs.getString("Password"));
                 profile.setEmail(rs.getString("Email"));
@@ -343,4 +344,49 @@ public class UserDAO {
         }
     }
 
+    public static boolean updateUserAddress(Profile profile, int addressId, int userId) {
+        DBContext db = DBContext.getInstance();
+        String updateAddressSQL = "UPDATE dbo.Addresses SET Street = ?, Ward = ?, District = ?, Province = ? WHERE AddressID = ?";
+        String updateUserSQL = "UPDATE Users SET FirstName = ?, LastName = ?, DateOfBirth = ?, Gender = ?, PhoneNumber = ?, RoomImagePath = ?, UpdatedAt = GETDATE(), Password = ? WHERE UserID = ?";
+
+        try (Connection conn = db.getConnection()) {
+            conn.setAutoCommit(false); // Bắt đầu transaction
+
+            // Cập nhật địa chỉ
+            try (PreparedStatement ps1 = conn.prepareStatement(updateAddressSQL)) {
+                ps1.setString(1, profile.getStreet());
+                ps1.setString(2, profile.getWard());
+                ps1.setString(3, profile.getDistrict());
+                ps1.setString(4, profile.getProvice());
+                ps1.setInt(5, addressId);
+                ps1.executeUpdate();
+            }
+
+            // Cập nhật user
+            try (PreparedStatement ps2 = conn.prepareStatement(updateUserSQL)) {
+                ps2.setString(1, profile.getFirstName());
+                ps2.setString(2, profile.getLastName());
+                ps2.setString(3, profile.getDateOfBirth());
+                ps2.setString(4, profile.getGender());
+                ps2.setString(5, profile.getPhoneNumber());
+                ps2.setString(6, profile.getImage());
+                ps2.setString(7, profile.getPassword());
+                ps2.setInt(8, userId);
+                ps2.executeUpdate();
+            }
+
+            conn.commit(); // Thành công cả 2 → commit
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                // Nếu lỗi → rollback
+                db.getConnection().rollback();
+            } catch (SQLException rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
+            return false;
+        }
+    }
 }

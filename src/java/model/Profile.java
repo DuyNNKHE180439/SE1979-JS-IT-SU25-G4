@@ -12,6 +12,7 @@ import java.time.LocalDate;
  */
 public class Profile {
     private int userId;
+    private int addressId;
     private String userName;
     private String password;
     private String email;
@@ -29,8 +30,9 @@ public class Profile {
     public Profile() {
     }
 
-    public Profile(int userId, String userName, String password, String email, String firstName, String lastName, String dateOfBirth, String gender, String phoneNumber, String image, String provice, String district, String ward, String street) {
+    public Profile(int userId, int addressId, String userName, String password, String email, String firstName, String lastName, String dateOfBirth, String gender, String phoneNumber, String image, String provice, String district, String ward, String street) {
         this.userId = userId;
+        this.addressId = addressId;
         this.userName = userName;
         this.password = password;
         this.email = email;
@@ -46,8 +48,13 @@ public class Profile {
         this.street = street;
     }
 
-   
+    public int getAddressId() {
+        return addressId;
+    }
 
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
+    }
     public int getUserId() {
         return userId;
     }
@@ -162,7 +169,9 @@ public class Profile {
 
     @Override
     public String toString() {
-        return "Profile{" + "userName=" + userName + ", password=" + password + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", phoneNumber=" + phoneNumber + ", image=" + image + ", provice=" + provice + ", district=" + district + ", ward=" + ward + ", street=" + street + '}';
+        return "Profile{" + "userId=" + userId + ", addressId=" + addressId + ", userName=" + userName + ", password=" + password + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", phoneNumber=" + phoneNumber + ", image=" + image + ", provice=" + provice + ", district=" + district + ", ward=" + ward + ", street=" + street + '}';
     }
+
+   
     
 }

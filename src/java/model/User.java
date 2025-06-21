@@ -9,6 +9,7 @@ package model;
  * @author Admin
  */
 public class User {
+
     private int userId;
     private String userName;
     private String passWord;
@@ -23,11 +24,12 @@ public class User {
     private int addressId;
     private String createdAt;
     private String updatedAt;
+    private String imagePath;
 
     public User() {
     }
 
-    public User(int userId, String userName, String passWord, String email, int roleId, String status, String firstName, String lastName, String dateOfBirth, String gender, String phoneNumber, int addressId, String createdAt, String updatedAt) {
+    public User(int userId, String userName, String passWord, String email, int roleId, String status, String firstName, String lastName, String dateOfBirth, String gender, String phoneNumber, int addressId, String createdAt, String updatedAt, String imagePath) {
         this.userId = userId;
         this.userName = userName;
         this.passWord = passWord;
@@ -42,7 +44,18 @@ public class User {
         this.addressId = addressId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.imagePath = imagePath;
     }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+  
 
     public int getUserId() {
         return userId;
@@ -158,7 +171,9 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", userName=" + userName + ", passWord=" + passWord + ", email=" + email + ", roleId=" + roleId + ", status=" + status + ", firstName=" + firstName + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", phoneNumber=" + phoneNumber + ", addressId=" + addressId + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + '}';
+        return "User{" + "userId=" + userId + ", userName=" + userName + ", passWord=" + passWord + ", email=" + email + ", roleId=" + roleId + ", status=" + status + ", firstName=" + firstName + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", phoneNumber=" + phoneNumber + ", addressId=" + addressId + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", imagePath=" + imagePath + '}';
     }
+
     
+
 }
