@@ -1,11 +1,18 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%-- 
+    Document   : viewRegistrations
+    Created on : Jun 23, 2025, 10:52:17 PM
+    Author     : Admin
+--%>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Director | Simple Tables</title>
+        <title>Director | Registrations</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -27,10 +34,15 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
     </head>
+    <c:if test="${not empty mess}">
+        <script>
+            alert("${mess}");
+        </script>
+    </c:if>
     <body class="skin-black">
         <!-- Header logo: style can be found in header.less -->
         <header class="header">
-            <a href="index.html" class="logo">
+            <a href="../index.html" class="logo">
                 Director
             </a>
             <!-- Header Navbar: style can be found in header.less -->
@@ -58,7 +70,7 @@
                                         <li>
                                             <a href="#">
                                                 <div class="pull-left">
-                                                    <img src="img/avatar3.png" class="img-circle" alt="User Image"/>
+                                                    <img src="../img/avatar3.png" class="img-circle" alt="User Image"/>
                                                 </div>
                                                 <h4>
                                                     Support Team
@@ -70,7 +82,7 @@
                                         <li>
                                             <a href="#">
                                                 <div class="pull-left">
-                                                    <img src="img/avatar2.png" class="img-circle" alt="user image"/>
+                                                    <img src="../img/avatar2.png" class="img-circle" alt="user image"/>
                                                 </div>
                                                 <h4>
                                                     Director Design Team
@@ -82,7 +94,7 @@
                                         <li>
                                             <a href="#">
                                                 <div class="pull-left">
-                                                    <img src="img/avatar.png" class="img-circle" alt="user image"/>
+                                                    <img src="../img/avatar.png" class="img-circle" alt="user image"/>
                                                 </div>
                                                 <h4>
                                                     Developers
@@ -94,7 +106,7 @@
                                         <li>
                                             <a href="#">
                                                 <div class="pull-left">
-                                                    <img src="img/avatar2.png" class="img-circle" alt="user image"/>
+                                                    <img src="../img/avatar2.png" class="img-circle" alt="user image"/>
                                                 </div>
                                                 <h4>
                                                     Sales Department
@@ -106,7 +118,7 @@
                                         <li>
                                             <a href="#">
                                                 <div class="pull-left">
-                                                    <img src="img/avatar.png" class="img-circle" alt="user image"/>
+                                                    <img src="../img/avatar.png" class="img-circle" alt="user image"/>
                                                 </div>
                                                 <h4>
                                                     Reviewers
@@ -218,7 +230,7 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="#">
+                                    <a href="profile.jsp">
                                         <i class="fa fa-user fa-fw pull-right"></i>
                                         Profile
                                     </a>
@@ -245,23 +257,14 @@
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="img/avatar3.png" class="img-circle" alt="User Image" />
+                            <img src="../img/avatar3.png" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
                             <p>Hello, Jane</p>
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
-                    <!-- Search form -->
-                    <form action="#" method="get" class="sidebar-form">
-                        <div class="input-group">
-                            <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                            <span class="input-group-btn">
-                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                            </span>
-                        </div>
-                    </form>
-                    <!-- Sidebar menu -->
+                    <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
                         <li>
                             <a href="index.html">
@@ -278,13 +281,13 @@
                                 <i class="fa fa-globe"></i> <span>Basic Elements</span>
                             </a>
                         </li>
-                        <li class="active">
-                            <a href="simple.html">
+                        <li >
+                            <a href="ListRoom.jsp">
                                 <i class="fa fa-glass"></i> <span>Simple tables</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="Manager?action=view">
+                        <li class="active">
+                            <a href="#">
                                 <i class="fa fa-glass"></i> <span>Quản lý yêu cầu phòng</span>
                             </a>
                         </li>
@@ -301,102 +304,89 @@
                         <div class="col-xs-12">
                             <div class="panel">
                                 <header class="panel-heading">
-                                    <div class="text-center">List Room</div>
-                                    <div style="margin-top: 10px;">
-                                        <a href="rooms?action=create" class="btn btn-primary btn-sm">Create Room</a>
-                                    </div>
+                                    <div class="text-center">Danh Sách Yêu Cầu Chờ Duyệt</div>
                                 </header>
-
-                                <div class="panel-body table-responsive">
-                                    <table id="roomTable" class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Room Number</th>
-                                                <th>Capacity</th>
-                                                <th>Current Occupancy</th>
-                                                <th>Status</th>
-                                                <th>Created At</th>
-                                                <th>Updated At</th>
-                                                <th>Actions</th> <!-- New column for CRUD actions -->
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach var="room" items="${roomList}">
+                                <form method="post" action="Manager">
+                                    <div class="panel-body table-responsive">
+                                        <table id="registrationTable" class="table table-hover">
+                                            <thead>
                                                 <tr>
-                                                    <td>${room.roomNumber}</td>
-                                                    <td>${room.capacity}</td>
-                                                    <td>${room.currentOccupancy != null ? room.currentOccupancy : "-"}</td>
-                                                    <td>
-                                                        <span class="label
-                                                              ${room.status == 'Available' ? 'label-success' : 
-                                                                room.status == 'Occupied' ? 'label-warning' : 
-                                                                'label-default'}">
-                                                                  ${room.status}
-                                                              </span>
-                                                        </td>
-                                                        <td>${room.createdAt}</td>
-                                                        <td>${room.updatedAt}</td>
+                                                    <th>ID</th>
+                                                    <th>Sinh Viên</th>
+                                                    <th>Phòng</th>
+                                                    <th>Giường</th>
+                                                    <th>Vị Trí</th>
+                                                    <th>Đơn Giá</th>
+                                                    <th>Tối Đa (người)</th>
+                                                    <th>Hiện Có (người)</th>
+                                                    <th>Ngày Đăng Ký</th>
+                                                    <th>Ngày Bắt Đầu</th>
+                                                    <th>Ngày Kết Thúc</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach var="reg" items="${list}">
+                                                    <tr>
+                                                        <td>${reg.getReId()}</td>
+                                                        <td>${reg.getStuName()}</td>
+                                                        <td>${reg.getRoomName()}</td>
+                                                        <td>${reg.getBedName()}</td>
+                                                        <td>${reg.getPosition()}</td>
+                                                        <td>${reg.getPrice()}</td>
+                                                        <td>${reg.getTotal()}</td>
+                                                        <td>${reg.getCurrent()}</td>
+                                                        <td>${reg.getRegiDate()}</td>
+                                                        <td>${reg.getStartDate()}</td>
+                                                        <td>${reg.getEndDate()}</td>
+
                                                         <td>
-                                                            <a href="rooms?action=edit&roomID=${room.roomID}" class="btn btn-warning btn-xs">Edit</a>
+                                                            <form method="post" action="Manager" style="display:inline;">
+                                                                <input type="hidden" name="id" value="${reg.getReId()}" />
+                                                                <input type="hidden" name="userId" value="${user.getUserId()}" />
+                                                                <button type="submit" name="action" value="approve" class="btn btn-warning btn-xs">Chấp Nhận</button>
+                                                            </form>
+                                                            <form method="post" action="Manager" style="display:inline;">
+                                                                <input type="hidden" name="id" value="${reg.getReId()}" />
+                                                                <input type="hidden" name="userId" value="${user.getUserId()}" />
+                                                                <button type="submit" name="action" value="reject" class="btn btn-danger btn-xs">Từ Chối</button>
+                                                            </form>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
-                                <!-- /.panel -->
+                                </form>
                             </div>
+                            <!-- /.panel -->
                         </div>
-                    </section>
-                    <!-- /.content -->
-                    <div class="footer-main">
-                        Copyright © Director, 2014
                     </div>
-                </aside>
-                <!-- /.right-side -->
-            </div>
-            <!-- ./wrapper -->
+                </section>
+                <!-- /.content -->
 
-            <!-- jQuery 2.0.2 -->
-            <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-            <!-- Bootstrap -->
-            <script src="js/bootstrap.min.js" type="text/javascript"></script>
-            <!-- DataTables JS -->
-            <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-            <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap.min.js"></script>
-            <!-- Director App -->
-            <script src="js/Director/app.js" type="text/javascript"></script>
-            <script>
-                                                                   $(document).ready(function () {
-                                                                       var table = $('#roomTable').DataTable({
-                                                                           "paging": true,
-                                                                           "searching": true,
-                                                                           "ordering": true,
-                                                                           "info": true,
-                                                                           "pageLength": 5,
-                                                                           "lengthMenu": [5, 10, 25, 50],
-                                                                           "language": {
-                                                                               "lengthMenu": "Show _MENU_ entries per page",
-                                                                               "zeroRecords": "No matching records found",
-                                                                               "info": "Showing page _PAGE_ of _PAGES_",
-                                                                               "infoEmpty": "No data available",
-                                                                               "infoFiltered": "(filtered from _MAX_ total entries)",
-                                                                               "search": "Search:",
-                                                                               "paginate": {
-                                                                                   "first": "First",
-                                                                                   "last": "Last",
-                                                                                   "next": "Next",
-                                                                                   "previous": "Previous"
-                                                                               }
-                                                                           }
-                                                                       });
+            </aside>
+            <!-- /.right-side -->
+        </div>
+        <!-- ./wrapper -->
 
-                                                                       // Link custom search box to DataTables
-                                                                       $('input[name="table_search"]').on('keyup', function () {
-                                                                           table.search(this.value).draw();
-                                                                       });
-                                                                   });
-            </script>
-        </body>
-    </html>
+        <!-- jQuery 2.0.2 -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <!-- DataTables JS -->
+        <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap.min.js"></script>
+        <!-- Director App -->
+        <script src="js/Director/app.js" type="text/javascript"></script>
+        <script>
+            $(document).ready(function () {
+                $('#registrationTable').DataTable({
+                    "paging": false,
+                    "searching": false,
+                    "ordering": true,
+                    "info": false
+                });
+            });
+        </script>
+    </body>
+</html>

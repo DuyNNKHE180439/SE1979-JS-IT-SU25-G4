@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/viewRegistrations.jsp</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/model/TokenForgetPassword.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/vendor/select2/select2.min.js</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/Profile.jsp</file>
@@ -12,6 +13,7 @@
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/vendor/animate/animate.css</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/view/resetPassword.jsp</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/vendor/select2/select2.min.css</file>
+            <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/model/Registration.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/js/main.js</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/css/util.css</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/requestPassword.java</file>
@@ -19,6 +21,7 @@
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/index.html</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/resetService.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/EditRequestServlet.java</file>
+            <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/dao/RegistrationDAO.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/view/requestPassword.jsp</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/view/registerBed.jsp</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/view/editRegistration.jsp</file>
@@ -37,8 +40,10 @@
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/dao/StudentDAO.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/RegisterServlet.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/ListRoomServlet.java</file>
+            <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/model/viewRegistrations.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/resetPassword.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/StudentServlet.java</file>
+            <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/RegisterListServlet.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/dao/UserDAO.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/view/studentHome.jsp</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/roomForm.jsp</file>

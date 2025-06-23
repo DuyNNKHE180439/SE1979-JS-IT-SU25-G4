@@ -82,9 +82,18 @@
         <div class="subheading">Thông Tin Cá Nhân</div>
         <div class="container max-w-4xl mx-auto pt-10 pb-10 px-6 bg-white rounded-2xl shadow-lg" style="margin-top: 100px;">
             <div class="flex justify-center mb-6">
-                <img src="${profile.image != null ? profile.image : pageContext.request.contextPath + '/images/FrogSleep.png'}"
-                     alt="Ảnh Đại Diện"
-                     class="w-32 h-32 rounded-full object-cover border-4 border-indigo-100 hover:scale-105 transition-transform duration-300">
+                <c:choose>
+                    <c:when test="${not empty profile.image}">
+                        <img src="${pageContext.request.contextPath}/${profile.image}"
+                             alt="Ảnh Đại Diện"
+                             class="w-32 h-32 rounded-full object-cover border-4 border-indigo-100 hover:scale-105 transition-transform duration-300">
+                    </c:when>
+                    <c:otherwise>
+                        <img src="${pageContext.request.contextPath}/images/FrogSleep.png"
+                             alt="Ảnh Đại Diện"
+                             class="w-32 h-32 rounded-full object-cover border-4 border-indigo-100 hover:scale-105 transition-transform duration-300">
+                    </c:otherwise>
+                </c:choose>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
