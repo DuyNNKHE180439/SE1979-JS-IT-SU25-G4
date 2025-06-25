@@ -59,7 +59,7 @@ public class LoginServlet extends HttpServlet {
                         response.sendRedirect("view/studentHome.jsp");
                         return;
                     case 3:
-                        response.sendRedirect("rooms");
+                        response.sendRedirect("manager-dashboard");
                         return;
                     default:
                         response.sendRedirect("login.jsp");
@@ -104,7 +104,7 @@ public class LoginServlet extends HttpServlet {
                         response.sendRedirect("view/studentHome.jsp");
                         return;
                     case 3:
-                        response.sendRedirect("rooms");
+                        response.sendRedirect("manager-dashboard");
                         return;
                    // tại đay tưng có 1 default chuyển về login.jsp
                 }
@@ -147,7 +147,7 @@ public class LoginServlet extends HttpServlet {
                         response.sendRedirect("view/studentHome.jsp");
                         return;
                     case 3:
-                        response.sendRedirect("rooms");
+                        response.sendRedirect("manager-dashboard");
                         return;
                     default:
                         response.sendRedirect("login.jsp");
