@@ -15,7 +15,7 @@
 </head>
 <body class="skin-black">
 
-    <!-- Phần đầu trang -->
+    <!-- Phần đầu -->
     <jsp:include page="slider.jsp" />
 
     <!-- Nội dung chính -->
