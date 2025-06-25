@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Admin
+ * @author Duy
  */
 public class AdminServlet extends HttpServlet {
    
