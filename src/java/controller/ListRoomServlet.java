@@ -4,12 +4,21 @@ import dao.RoomDAO;
 import model.Room;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 
 @WebServlet("/rooms")
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 1,  // 1MB
+        maxFileSize = 1024 * 1024 * 10,       // 10MB
+        maxRequestSize = 1024 * 1024 * 15     // 15MB
+)
 public class ListRoomServlet extends HttpServlet {
 
     @Override
@@ -117,6 +126,19 @@ public class ListRoomServlet extends HttpServlet {
         room.setCurrentOccupancy(currentOccupancy);
         room.setStatus(status);
 
+        // Upload ảnh vào thư mục build/images (runtime)
+        Part filePart = request.getPart("roomImage");
+        if (filePart != null && filePart.getSize() > 0) {
+            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            String uploadPath = getServletContext().getRealPath("/images");
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) uploadDir.mkdirs();
+
+            filePart.write(uploadPath + File.separator + fileName);
+            room.setRoomImagePath("images/" + fileName);
+            System.out.println("✅ Ghi ảnh vào: " + uploadPath + "/" + fileName);
+        }
+
         boolean success = RoomDAO.createRoom(room);
         if (success) {
             response.sendRedirect("rooms?action=list");
@@ -181,6 +203,24 @@ public class ListRoomServlet extends HttpServlet {
         room.setCurrentOccupancy(currentOccupancy);
         room.setStatus(status);
 
+        // Upload ảnh (nếu có) vào thư mục build/images (runtime)
+        Part filePart = request.getPart("roomImage");
+        if (filePart != null && filePart.getSize() > 0) {
+            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            String uploadPath = getServletContext().getRealPath("/images");
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) uploadDir.mkdirs();
+
+            filePart.write(uploadPath + File.separator + fileName);
+            room.setRoomImagePath("images/" + fileName);
+            System.out.println("✅ Ghi ảnh vào: " + uploadPath + "/" + fileName);
+        } else {
+            Room existing = RoomDAO.getRoomByID(roomID);
+            if (existing != null) {
+                room.setRoomImagePath(existing.getRoomImagePath());
+            }
+        }
+
         boolean success = RoomDAO.updateRoom(room);
         if (success) {
             response.sendRedirect("rooms?action=list");
@@ -189,5 +229,4 @@ public class ListRoomServlet extends HttpServlet {
             request.getRequestDispatcher("roomForm.jsp").forward(request, response);
         }
     }
-
 }
