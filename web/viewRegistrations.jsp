@@ -1,7 +1,7 @@
 <%-- 
     Document   : viewRegistrations
     Created on : Jun 23, 2025, 10:52:17 PM
-    Author     : Admin
+    Author     : Duy
 --%>
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
