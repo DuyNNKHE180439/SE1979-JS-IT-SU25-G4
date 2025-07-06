@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
                  int role = user.getRoleId();
                 switch (role) {  // phan quyen chuyen trang tai day 1
                     case 1:
-                        out.println("Bạn là ADMIN");
+                        response.sendRedirect("admin-dashboard");
                         return;
                     case 2:
                         response.sendRedirect("view/studentHome.jsp");
@@ -98,7 +98,7 @@ public class LoginServlet extends HttpServlet {
                  int role = user.getRoleId();
                 switch (role) {  // phan quyen chuyen trang tai day 2
                     case 1:
-                        out.println("Bạn là ADMIN");
+                        response.sendRedirect("admin-dashboard");
                         return;
                     case 2:
                         response.sendRedirect("view/studentHome.jsp");
@@ -141,7 +141,7 @@ public class LoginServlet extends HttpServlet {
                 int role = user.getRoleId();
                 switch (role) { // phan quyen chuyen trang tai day 3
                     case 1:
-                        out.println("Bạn là ADMIN");
+                        response.sendRedirect("admin-dashboard");
                         return;
                     case 2:
                         response.sendRedirect("view/studentHome.jsp");

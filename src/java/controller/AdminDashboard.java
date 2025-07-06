@@ -8,15 +8,17 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Duy
+ * @author ADMIN
  */
-public class AdminServlet extends HttpServlet {
+@WebServlet(name="AdminDashboard", urlPatterns={"/admin-dashboard"})
+public class AdminDashboard extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,10 +35,10 @@ public class AdminServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminServlet</title>");  
+            out.println("<title>Servlet AdminDashboard</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AdminServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet AdminDashboard at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -53,8 +55,7 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
-    } 
+        request.getRequestDispatcher("admin-dashboard.jsp").forward(request, response);    } 
 
     /** 
      * Handles the HTTP <code>POST</code> method.
