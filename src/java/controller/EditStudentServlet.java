@@ -55,7 +55,7 @@ public class EditStudentServlet extends HttpServlet {
         Student existingStudent = dao.getStudentByUserId(userId);
         String imagePath = existingStudent.getUser().getImagePath();
 
-        // Upload ảnh nếu có
+        
         Part imagePart = request.getPart("imagePath");
         if (imagePart != null && imagePart.getSize() > 0) {
             String fileName = UUID.randomUUID().toString() + "_" + Paths.get(imagePart.getSubmittedFileName()).getFileName();
