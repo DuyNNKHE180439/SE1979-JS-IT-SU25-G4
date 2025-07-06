@@ -6,7 +6,7 @@ package model;
 
 /**
  *
- * @author ADMIN
+ * @author Duy
  */
 public class Student {
     private int studentID;
