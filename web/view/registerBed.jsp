@@ -1,7 +1,7 @@
 <%-- 
     Document   : registerBed
     Created on : Jun 16, 2025, 12:48:15 PM
-    Author     : ADMIN
+    Author     : DUY
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
