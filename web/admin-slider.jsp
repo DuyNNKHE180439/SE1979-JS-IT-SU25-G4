@@ -257,7 +257,7 @@
 
                         <li>
                             <a href="manage-account">
-                                <i class="fa fa-gavel"></i> <span>Quản lí tài khoản</span>
+                                <i class="fa fa-gavel"></i> <span>Quản Lí Tài Khoản</span>
                             </a>
                         </li>
 

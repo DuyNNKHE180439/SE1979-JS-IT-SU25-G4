@@ -8,6 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
+<%@ page import="java.text.SimpleDateFormat, java.util.Date" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -400,6 +401,30 @@
                     font-size: 0.9rem;
                 }
             }
+            .main .form-container select {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #e2e8f0;
+                border-radius: 6px;
+                font-size: 0.95rem;
+                color: #4a5568;
+                margin-bottom: 16px;
+                transition: border-color 0.2s ease;
+                background-color: #fff;
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                background-image: url('data:image/svg+xml;utf8,<svg fill="%234a5568" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+                background-repeat: no-repeat;
+                background-position: right 10px center;
+                background-size: 20px 20px;
+            }
+
+            .main .form-container select:focus {
+                outline: none;
+                border-color: #3182ce;
+                box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.1);
+            }
         </style>
     </head>
 
@@ -453,33 +478,94 @@
                 </p>
             </div>
 
+            <%
+// Format ngày hôm nay yyyy-MM-dd để dùng cho min="..."
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+String today = sdf.format(new Date());
+            %>
             <c:choose>
                 <c:when test="${not empty bed}">
-                    <form action="${pageContext.request.contextPath}/register-bed" method="post" class="form-container">
+                    <form action="${pageContext.request.contextPath}/register-bed" method="post" class="form-container" onsubmit="return validateBookingForm()">
                         <input type="hidden" name="bedId" value="${bed.bedID}" />
                         <input type="hidden" name="roomId" value="${room.roomID}" />
 
                         <p><strong>Giường:</strong> ${bed.bedNumber} - ${bed.position}</p>
-                        <p><strong>Giá:</strong> <fmt:formatNumber value="${bed.price}" type="currency" currencySymbol="₫" /></p>
+                        <p><strong>Giá:</strong> 
+                            <fmt:formatNumber value="${bed.price}" type="currency" currencySymbol="₫" />
+                        </p>
                         <p><strong>Trạng thái:</strong>
                             <span class="${bed.status eq 'Available' ? 'status-available' : 'status-occupied'}">
-                                <i class="fa-solid fa-circle"></i> ${bed.status eq 'Available' ? 'Còn trống' : 'Đã đặt'}
+                                <i class="fa-solid fa-circle"></i> 
+                                ${bed.status eq 'Available' ? 'Còn trống' : 'Đã đặt'}
                             </span>
                         </p>
 
                         <label for="startDate">Ngày bắt đầu:</label>
-                        <input type="date" id="startDate" name="startDate" required />
+                        <!-- Sửa tại đây: gán min="<%= today %>" để ngăn chọn ngày quá khứ -->
+                        <input type="date" id="startDate" name="startDate" required onchange="updateEndDate()" min="<%= today %>" />
+
+                        <label for="months">Thời gian thuê (tháng):</label>
+                        <select id="months" name="months" onchange="updateEndDate()" required>
+                            <option value="1">1 tháng</option>
+                            <option value="2">2 tháng</option>
+                            <option value="3">3 tháng</option>
+                            <option value="6">6 tháng</option>
+                        </select>
 
                         <label for="endDate">Ngày kết thúc:</label>
-                        <input type="date" id="endDate" name="endDate" required />
+                        <input type="date" id="endDate" name="endDate" readonly />
 
                         <button type="submit">Gửi yêu cầu đăng ký</button>
                     </form>
+
+                    <!-- Script xử lý ngày -->
+                    <script>
+                        function updateEndDate() {
+                            const startInput = document.getElementById("startDate").value;
+                            const months = parseInt(document.getElementById("months").value || "1");
+
+                            if (!startInput) {
+                                document.getElementById("endDate").value = "";
+                                return;
+                            }
+
+                            const startDate = new Date(startInput);
+                            const endDate = new Date(startDate);
+                            endDate.setMonth(endDate.getMonth() + months);
+
+                            // Nếu ngày không tồn tại ở tháng sau (VD: 31 -> 30 hoặc 28)
+                            if (endDate.getDate() !== startDate.getDate()) {
+                                endDate.setDate(0); // lùi về cuối tháng trước
+                            }
+
+                            const formatted = endDate.toISOString().split("T")[0];
+                            document.getElementById("endDate").value = formatted;
+                        }
+
+                        function validateBookingForm() {
+                            const start = document.getElementById("startDate").value;
+                            const end = document.getElementById("endDate").value;
+
+                            if (!start || !end) {
+                                alert("Vui lòng chọn ngày bắt đầu và thời gian thuê.");
+                                return false;
+                            }
+
+                            const today = new Date().toISOString().split("T")[0];
+                            if (start < today) {
+                                alert("Ngày bắt đầu không được nhỏ hơn hôm nay.");
+                                return false;
+                            }
+
+                            return true;
+                        }
+                    </script>
                 </c:when>
                 <c:otherwise>
                     <p class="no-bed-message">Không tìm thấy thông tin giường cần đăng ký.</p>
                 </c:otherwise>
             </c:choose>
+
 
             <a href="${pageContext.request.contextPath}/room" class="back-btn">← Quay lại danh sách phòng</a>
         </div>
