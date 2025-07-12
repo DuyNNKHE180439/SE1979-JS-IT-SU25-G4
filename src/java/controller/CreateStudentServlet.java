@@ -32,6 +32,7 @@ public class CreateStudentServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
+        // ==== Lấy thông tin người dùng ====
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
@@ -40,10 +41,45 @@ public class CreateStudentServlet extends HttpServlet {
         String gender = request.getParameter("gender");
         String phone = request.getParameter("phoneNumber");
         String dob = request.getParameter("dateOfBirth");
+        String roleIdRaw = request.getParameter("roleId");
         String studentCode = request.getParameter("studentCode");
+        String existingImagePath = request.getParameter("existingImagePath");
+
+        int roleId = (roleIdRaw != null && !roleIdRaw.isEmpty()) ? Integer.parseInt(roleIdRaw) : 0;
+
+        // ==== Xử lý ảnh (ưu tiên ảnh mới, nếu không có thì giữ ảnh cũ) ====
+        String imagePath = null;
+        Part imagePart = request.getPart("imagePath");
+        if (imagePart != null && imagePart.getSize() > 0) {
+            String fileName = UUID.randomUUID().toString() + "_" + Paths.get(imagePart.getSubmittedFileName()).getFileName();
+            String uploadPath = getServletContext().getRealPath("/") + "uploads";
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
+            imagePart.write(uploadPath + File.separator + fileName);
+            imagePath = "uploads/" + fileName;
+        } else {
+            // Nếu không upload ảnh mới thì giữ ảnh cũ
+            imagePath = existingImagePath;
+        }
+
+        // ==== Khởi tạo đối tượng User ====
+        User user = new User();
+        user.setUserName(username);
+        user.setPassWord(password);
+        user.setEmail(email);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setGender(gender);
+        user.setPhoneNumber(phone);
+        user.setDateOfBirth(dob);
+        user.setRoleId(roleId);
+        user.setImagePath(imagePath); // gán ảnh xử lý ở trên
 
         boolean hasError = false;
 
+        // ==== Validate ====
         if (username == null || username.trim().isEmpty()) {
             request.setAttribute("usernameError", "Tên đăng nhập không được để trống.");
             hasError = true;
@@ -51,7 +87,7 @@ public class CreateStudentServlet extends HttpServlet {
             request.setAttribute("usernameError", "Tên đăng nhập phải có ít nhất 4 ký tự.");
             hasError = true;
         } else if (dao.checkUsernameExists(username)) {
-            request.setAttribute("usernameError", "Tên đăng nhập đã tồn tại, vui lòng chọn tên khác.");
+            request.setAttribute("usernameError", "Tên đăng nhập đã tồn tại.");
             hasError = true;
         }
 
@@ -70,7 +106,7 @@ public class CreateStudentServlet extends HttpServlet {
             request.setAttribute("emailError", "Email không đúng định dạng.");
             hasError = true;
         } else if (dao.checkEmailExists(email)) {
-            request.setAttribute("emailError", "Email đã tồn tại, vui lòng chọn email khác.");
+            request.setAttribute("emailError", "Email đã tồn tại.");
             hasError = true;
         }
 
@@ -79,50 +115,37 @@ public class CreateStudentServlet extends HttpServlet {
             hasError = true;
         }
 
-        if (studentCode == null || studentCode.trim().isEmpty()) {
-            request.setAttribute("studentCodeError", "Mã sinh viên không được để trống.");
-            hasError = true;
-        } else if (dao.checkStudentCodeExists(studentCode)) {
-            request.setAttribute("studentCodeError", "Mã sinh viên đã tồn tại.");
-            hasError = true;
+        if (roleId == 2) {
+            if (studentCode == null || studentCode.trim().isEmpty()) {
+                request.setAttribute("studentCodeError", "Mã sinh viên không được để trống.");
+                hasError = true;
+            } else if (dao.checkStudentCodeExists(studentCode)) {
+                request.setAttribute("studentCodeError", "Mã sinh viên đã tồn tại.");
+                hasError = true;
+            }
         }
 
-        User user = new User();
-        user.setUserName(username);
-        user.setPassWord(password);
-        user.setEmail(email);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setGender(gender);
-        user.setPhoneNumber(phone);
-        user.setDateOfBirth(dob);
-        user.setImagePath(null);
-
-        Student student = new Student(user, studentCode);
-
+        // ==== Nếu có lỗi -> quay lại form + giữ dữ liệu nhập ====
         if (hasError) {
+            Student student = new Student(user, studentCode);
             request.setAttribute("student", student);
             request.getRequestDispatcher("create-student.jsp").forward(request, response);
             return;
         }
 
-        Part imagePart = request.getPart("imagePath");
-        if (imagePart != null && imagePart.getSize() > 0) {
-            String fileName = UUID.randomUUID().toString() + "_" + Paths.get(imagePart.getSubmittedFileName()).getFileName();
-            String uploadPath = getServletContext().getRealPath("/") + "uploads";
-            File uploadDir = new File(uploadPath);
-            if (!uploadDir.exists()) {
-                uploadDir.mkdirs();
-            }
-            imagePart.write(uploadPath + File.separator + fileName);
-            user.setImagePath("uploads/" + fileName);
+        // ==== Nếu hợp lệ -> thực hiện tạo user/student ====
+        boolean success;
+        if (roleId == 2) {
+            success = dao.createStudent(user, studentCode);
+        } else {
+            success = dao.createUserOnly(user);
         }
 
-        boolean success = dao.createStudent(user, studentCode);
         if (success) {
             response.sendRedirect("manage-account");
         } else {
             request.setAttribute("error", "Không thể tạo tài khoản. Vui lòng thử lại.");
+            Student student = new Student(user, studentCode);
             request.setAttribute("student", student);
             request.getRequestDispatcher("create-student.jsp").forward(request, response);
         }

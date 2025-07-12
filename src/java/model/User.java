@@ -47,6 +47,21 @@ public class User {
         this.imagePath = imagePath;
     }
 
+    public User(int userId, String userName, String email, String firstName, String lastName, String dateOfBirth, String gender, String phoneNumber, int roleId, String imagePath) {
+        this.userId = userId;
+        this.userName = userName;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+        this.roleId = roleId;
+        this.imagePath = imagePath;
+    }
+    
+    
+
     public String getImagePath() {
         return imagePath;
     }
