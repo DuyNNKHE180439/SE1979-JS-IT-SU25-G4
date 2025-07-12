@@ -76,7 +76,6 @@ public class EditStudentServlet extends HttpServlet {
                 if (!uploadDir.exists()) uploadDir.mkdirs();
                 imagePart.write(uploadPath + File.separator + fileName);
                 imagePath = "uploads/" + fileName;
-
             }
 
             // Tạo đối tượng User
