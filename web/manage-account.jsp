@@ -173,7 +173,7 @@
                 </div>
             </aside>
 
-            <!-- Script -->
+            <!-- Script! -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
             <script src="js/bootstrap.min.js"></script>
             <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
