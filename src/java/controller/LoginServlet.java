@@ -40,7 +40,6 @@ public class LoginServlet extends HttpServlet {
             String accessToken = gg.getToken(code);
             GoogleAccount acc = gg.getUserInfo(accessToken);
             User user = UserDAO.getUserByEmail(acc.getEmail());
-
             if (user == null) {
                 String error = "Sai tên tài khoản hoặc mật khẩu!";
                 request.setAttribute("error", error);

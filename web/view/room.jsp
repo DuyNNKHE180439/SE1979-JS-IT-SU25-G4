@@ -18,24 +18,21 @@
         <style>
             * {
                 box-sizing: border-box;
-                margin: 0;
-                padding: 0;
             }
 
             body {
-                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                background-color: #f7fafc;
-                color: #2d3748;
-                line-height: 1.6;
+                font-family: Arial, sans-serif;
+                margin: 0;
+                background-color: #f4f4f4;
             }
 
             .nav-bar {
-                background-color: #ffffff;
-                height: 64px;
-                padding: 0 24px;
+                background-color: #fff;
+                height: 80px;
+                padding: 0 20px;
                 display: flex;
                 align-items: center;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
                 position: fixed;
                 top: 0;
                 width: 100%;
@@ -43,23 +40,14 @@
             }
 
             .nav-bar .hamburger {
-                font-size: 1.5rem;
-                color: #ed8936;
+                font-size: 24px;
+                color: rgb(3, 78, 162);
                 cursor: pointer;
-                transition: color 0.2s ease;
-            }
-
-            .nav-bar .hamburger:hover {
-                color: #dd6b20;
+                margin-right: 20px;
             }
 
             .nav-bar .logo img {
-                height: 48px;
-                transition: transform 0.3s ease;
-            }
-
-            .nav-bar .logo img:hover {
-                transform: scale(1.05);
+                height: 60px;
             }
 
             .nav-bar .notification {
@@ -120,10 +108,11 @@
                 margin: 0;
             }
 
-            @keyframes slideIn {
+
+            @keyframes fadeIn {
                 from {
                     opacity: 0;
-                    transform: translateY(-8px);
+                    transform: translateY(-10px);
                 }
                 to {
                     opacity: 1;
@@ -132,16 +121,18 @@
             }
 
             .sidebar {
-                width: 260px;
-                background-color: #ffffff;
-                padding: 24px;
-                box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
-                height: calc(100vh - 64px);
+                width: 300px;
+                background-color: #fff;
+                padding: 20px;
+                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                height: calc(100vh - 80px);
                 position: fixed;
-                top: 64px;
+                top: 80px;
                 left: 0;
                 transition: transform 0.3s ease;
                 z-index: 900;
+                display: flex;
+                flex-direction: column;
             }
 
             .sidebar.hidden {
@@ -149,91 +140,90 @@
             }
 
             .sidebar .profile {
-                display: flex;
-                align-items: center;
-                margin-bottom: 24px;
-                padding-bottom: 16px;
-                border-bottom: 1px solid #edf2f7;
+                text-align: left;
+                margin-bottom: 10px;
             }
 
-            .sidebar .profile img {
-                width: 48px;
-                height: 48px;
+            .sidebar .profile table {
+                width: 100%;
+            }
+
+            .sidebar .profile td:first-child img {
+                width: 60px;
                 border-radius: 50%;
-                margin-right: 12px;
-                object-fit: cover;
+                vertical-align: middle;
+                margin-right: 10px;
             }
 
-            .sidebar .profile .info {
-                flex: 1;
+            .sidebar .profile td:last-child {
+                vertical-align: middle;
             }
 
             .sidebar .profile .title {
-                font-size: 1rem;
-                font-weight: 600;
-                color: #2b6cb0;
-                margin-bottom: 4px;
+                font-weight: bold;
+                color: #1E90FF;
+                margin-right: 5px;
             }
 
             .sidebar .profile p {
-                font-size: 0.85rem;
-                color: #718096;
                 margin: 2px 0;
             }
 
+            .sidebar .profile p:first-child {
+                font-size: 16px;
+                margin-bottom: 12px;
+            }
+
+            .sidebar .profile p:not(:first-child) {
+                font-size: 12px;
+            }
+
             .sidebar .menu {
-                max-height: calc(100vh - 200px);
+                flex: 1;
                 overflow-y: auto;
+                margin-bottom: 20px;
             }
 
             .sidebar .menu a {
                 display: flex;
                 align-items: center;
-                padding: 12px 16px;
-                color: #4a5568;
+                padding: 14px;
+                color: rgb(3, 78, 162);
                 text-decoration: none;
-                margin-bottom: 8px;
-                border-radius: 6px;
-                transition: all 0.2s ease;
-                font-size: 0.95rem;
-                font-weight: 500;
+                margin-bottom: 10px;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+            }
+
+
+            .sidebar .menu a:hover {
+                background-color: #F36F21;
+                color: #fff;
             }
 
             .sidebar .menu a i {
                 margin-right: 12px;
-                font-size: 1.25rem;
-                color: #718096;
+                font-size: 20px;
+                color: rgb(3, 78, 162);
             }
 
-            .sidebar .menu a:hover,
-            .sidebar .menu a.active {
-                background-color: #ed8936;
-                color: #ffffff;
-            }
-
-            .sidebar .menu a:hover i,
-            .sidebar .menu a.active i {
-                color: #ffffff;
+            .sidebar .logout {
+                margin-top: auto;
             }
 
             .sidebar .logout a {
                 display: block;
-                padding: 12px 16px;
-                background-color: #e53e3e;
-                color: #ffffff;
+                padding: 14px;
+                background-color: #F36F21;
+                color: #fff;
                 text-align: center;
                 text-decoration: none;
-                border-radius: 6px;
-                font-weight: 500;
-                transition: background-color 0.2s ease;
-            }
-
-            .sidebar .logout a:hover {
-                background-color: #c53030;
+                border-radius: 8px;
+                transition: background-color 0.3s ease;
             }
 
             .main {
-                margin-left: 260px;
+                margin-left: 300px;
                 padding: 80px 24px 24px;
                 transition: margin-left 0.3s ease;
                 min-height: calc(100vh - 64px);
@@ -303,8 +293,6 @@
                 color: #718096;
                 font-weight: 500;
             }
-
-
 
             .main .room-card .content {
                 padding: 16px;
@@ -475,16 +463,16 @@
                 <i class="fa-solid fa-bell"></i>
                 <div class="popup" id="popup">
                     <div class="popup-item">
-                        <h4>Electricity Bill Notice</h4>
-                        <p>Electricity bill payment notice issued.</p>
+                        <h4>Thông báo đóng tiền điện</h4>
+                        <p>Đã có thông báo đóng tiền điện.</p>
                     </div>
                     <div class="popup-item">
-                        <h4>Security Alert</h4>
-                        <p>Students, please protect your personal belongings.</p>
+                        <h4>Cảnh báo an ninh</h4>
+                        <p>Sinh viên chú ý bảo vệ đồ đạc tư trang cá nhân.</p>
                     </div>
                     <div class="popup-item">
-                        <h4>New Notification</h4>
-                        <p>You have 1 new notification.</p>
+                        <h4>Thông báo mới</h4>
+                        <p>Bạn có 1 thông báo mới.</p>
                     </div>
                 </div>
             </div>
@@ -496,9 +484,9 @@
             <h2>Dormitory Room List</h2>
 
             <!-- Search form -->
-            <form class="search-form" action="${pageContext.request.contextPath}/room" method="get" style="display: flex; gap: 8px; align-items: center; margin-bottom: 24px;">
-                <input type="text" name="search" placeholder="Tìm theo số phòng..." value="${param.search}" />
-                <button type="submit">Tìm kiếm</button>
+            <form class="search-form" action="${pageContext.request.contextPath}/room" method="get">
+                <input type="text" name="search" placeholder="Search by room number or status..." value="${param.search}"/>
+                <button type="submit">Search</button>
             </form>
 
             <!-- Notification after booking -->

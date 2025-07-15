@@ -15,8 +15,12 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import jakarta.servlet.annotation.MultipartConfig;
 import java.io.File;
+import java.util.ArrayList;
 import model.Profile;
 import model.User;
+import model.Order;
+import dao.BedDAO;
+import java.util.List;
 
 /**
  *
@@ -77,6 +81,12 @@ public class UserServlet extends HttpServlet {
             request.getRequestDispatcher("view/profile.jsp").forward(request, response);
         } else if (action.equalsIgnoreCase("editProfile")) {
             request.getRequestDispatcher("view/editProfile.jsp").forward(request, response);
+        } else if (action.equalsIgnoreCase("listOrder")) {
+            List<Order> order = BedDAO.getAllOrder();
+            request.setAttribute("order", order);
+            request.getRequestDispatcher("view/listOrder.jsp").forward(request, response);
+        } else if (action.equalsIgnoreCase("listResidentHistory")) {
+            request.getRequestDispatcher("view/listResidentHistory.jsp").forward(request, response);
         }
     }
 

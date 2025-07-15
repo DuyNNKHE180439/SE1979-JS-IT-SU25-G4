@@ -37,11 +37,11 @@
         <a href="${pageContext.request.contextPath}/view/studentHome.jsp"><i class="fa-solid fa-house"></i> Trang Chủ</a>
         <a href="${pageContext.request.contextPath}/user?action=viewProfile"><i class="fa-solid fa-file-alt"></i> Thông Tin Cá Nhân</a>
         <a href="#"><i class="fa-solid fa-bell"></i> Bảng Tin</a>
-        <a href="#"><i class="fa-solid fa-clock"></i> Lịch Sử Cư Trú</a>
+        <a href="${pageContext.request.contextPath}/user?action=listResidentHistory"><i class="fa-solid fa-clock"></i> Lịch Sử Cư Trú</a>
         <a href="${pageContext.request.contextPath}/room"><i class="fa-solid fa-bed"></i> Đặt Phòng</a>
         <a href="${pageContext.request.contextPath}/register-list"><i class="fa-solid fa-file-alt"></i> Yêu Cầu Của Tôi</a>
         <a href="#"><i class="fa-solid fa-plug"></i> Điện Nước Sử Dụng</a>
-        <a href="#"><i class="fa-solid fa-dollar-sign"></i> Thanh Toán</a>
+        <a href="${pageContext.request.contextPath}/user?action=listOrder"><i class="fa-solid fa-dollar-sign"></i> Thanh Toán</a>
     </div>
     <div class="logout">
         <a href="${pageContext.request.contextPath}/Logout">Đăng Xuất</a>
