@@ -451,14 +451,10 @@
                             <th>Ngày Đăng Ký</th>
                             <th>Ngày Bắt Đầu</th>
                             <th>Ngày Kết Thúc</th>
-                            <th>Đơn Giá (VNĐ)</th>
-                            <th>Tổng (VNĐ)</th>
-                            <th></th>
-
+                            <th>Đơn Giá (VNĐ)</th>                         
                         </tr>
                     </thead>
-                    <tbody>
-                        <%--
+                    <tbody>                       
                         <c:forEach var="order" items="${order}" varStatus="loop">
                             <tr class="news-item">
                                 <td>${loop.count}</td>
@@ -469,16 +465,9 @@
                                 <td>${order.getStartDate()}</td>
                                 <td>${order.getEndDate()}</td>
                                 <td>${order.getPrice()}</td>
-                                <td>${order.getTotal()}</td>
-                                <td>
-                                    <form action="payment" method="POST">
-                                        <input type="hidden" name="totalBill" value="${order.getTotal()}">
-                                        <button type="submit" class="payment-btn">Thanh Toán</button>
-                                    </form>
-                                </td>
                             </tr>
                         </c:forEach>
-                        --%>
+                        
                     </tbody>
                 </table>
             </div>

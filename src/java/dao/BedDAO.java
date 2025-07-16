@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Bed;
 import model.Order;
+import model.ResidentHistory;
 
 /**
  *
@@ -93,7 +94,7 @@ public class BedDAO {
                 or.setStartDate(rs.getString("StartDate").substring(0, 10));
                 or.setEndDate(rs.getString("EndDate").substring(0, 10));
                 or.setPrice(rs.getDouble("Price"));
-                
+
                 LocalDate startDate = LocalDate.parse(rs.getString("StartDate").substring(0, 10));
                 LocalDate endDate = LocalDate.parse(rs.getString("EndDate").substring(0, 10));
                 long months = ChronoUnit.MONTHS.between(startDate, endDate);
@@ -106,24 +107,45 @@ public class BedDAO {
         }
         return list;
     }
-    public static void main(String[] args) {
-        List<Order> orders = BedDAO.getAllOrder();
 
-        if (orders.isEmpty()) {
-            System.out.println("Không có đơn đăng ký nào.");
-        } else {
-            for (Order or : orders) {
-                System.out.println("================================");
-                System.out.println("Mã đăng ký: " + or.getRegisId());
-                System.out.println("Mã sinh viên: " + or.getStuNum());
-                System.out.println("Phòng: " + or.getRoomNum());
-                System.out.println("Giường: " + or.getBedNum());
-                System.out.println("Vị trí: " + or.getPosition());
-                System.out.println("Ngày đăng ký: " + or.getRegisDate());
-                System.out.println("Bắt đầu: " + or.getStartDate());
-                System.out.println("Kết thúc: " + or.getEndDate());
-                System.out.println("Đơn giá: " + or.getPrice());
+    public static List<Order> getResidentHistory(int userId) {
+        List<Order> list = new ArrayList<>();
+        String sql = """
+                     SELECT * FROM dbo.Registrations 
+                                          JOIN dbo.Rooms ON Rooms.RoomID = Registrations.RoomID 
+                                          JOIN dbo.Beds ON Beds.BedID = Registrations.BedID 
+                                          JOIN dbo.Students ON Students.StudentID = Registrations.StudentID
+                     			  JOIN dbo.Users ON Users.UserID = Students.UserID
+                     			 WHERE Registrations.Status='Complete' AND Students.UserID=?
+                     """;
+
+        try (PreparedStatement ps = DBContext.getInstance().getConnection().prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Order or = new Order();
+                or.setStuNum(rs.getInt("StudentID"));
+                or.setRegisId(rs.getInt("RegistrationID"));
+                or.setRoomNum(rs.getString("RoomNumber"));
+                or.setBedNum(rs.getString("BedNumber"));
+                or.setPosition(rs.getString("Position"));
+                or.setRegisDate(rs.getString("RegistrationDate").substring(0, 10));
+                or.setStartDate(rs.getString("StartDate").substring(0, 10));
+                or.setEndDate(rs.getString("EndDate").substring(0, 10));
+                or.setPrice(rs.getDouble("Price"));
+
+                LocalDate startDate = LocalDate.parse(rs.getString("StartDate").substring(0, 10));
+                LocalDate endDate = LocalDate.parse(rs.getString("EndDate").substring(0, 10));
+                long months = ChronoUnit.MONTHS.between(startDate, endDate);
+                double total = months * rs.getDouble("Price");
+                or.setTotal(total);
+                list.add(or);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return list;
     }
+  
+
 }

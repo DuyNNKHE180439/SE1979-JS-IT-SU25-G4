@@ -86,6 +86,8 @@ public class UserServlet extends HttpServlet {
             request.setAttribute("order", order);
             request.getRequestDispatcher("view/listOrder.jsp").forward(request, response);
         } else if (action.equalsIgnoreCase("listResidentHistory")) {
+            List<Order> order = BedDAO.getResidentHistory(user.getUserId());
+            request.setAttribute("order", order);
             request.getRequestDispatcher("view/listResidentHistory.jsp").forward(request, response);
         }
     }
