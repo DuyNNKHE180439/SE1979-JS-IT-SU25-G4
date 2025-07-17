@@ -73,16 +73,20 @@ public class BedDAO {
     }
 // hàm dao lấy tất cả những request status là approve
 
-    public static List<Order> getAllOrder() {
+    public static List<Order> getAllOrderById(int userId) {
         List<Order> list = new ArrayList<>();
         String sql = """
                      SELECT * FROM dbo.Registrations 
-                     JOIN dbo.Rooms ON Rooms.RoomID = Registrations.RoomID 
-                     JOIN dbo.Beds ON Beds.BedID = Registrations.BedID 
-                     WHERE Registrations.Status ='Approve'
+                                          JOIN dbo.Rooms ON Rooms.RoomID = Registrations.RoomID 
+                                          JOIN dbo.Beds ON Beds.BedID = Registrations.BedID 
+                     			  JOIN dbo.Students ON Students.StudentID = Registrations.StudentID
+                     			  JOIN dbo.Users ON Users.UserID = Students.UserID
+                                          WHERE Registrations.Status ='Approve' AND Students.UserID=?
                      """;
 
-        try (PreparedStatement ps = DBContext.getInstance().getConnection().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = DBContext.getInstance().getConnection().prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Order or = new Order();
                 or.setStuNum(rs.getInt("StudentID"));

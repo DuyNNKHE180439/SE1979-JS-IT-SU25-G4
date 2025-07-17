@@ -384,14 +384,14 @@
                 background: linear-gradient(45deg, #F36F21, #ff8c00);
                 color: #fff;
                 text-decoration: none;
-                border: none; 
+                border: none;
                 border-radius: 8px;
                 font-size: 14px;
                 font-weight: 600;
                 text-align: center;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
                 transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-                cursor: pointer; 
+                cursor: pointer;
             }
 
             .main table .payment-btn:hover {
@@ -453,26 +453,37 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="order" items="${order}" varStatus="loop">
-                            <tr class="news-item">
-                                <td>${loop.count}</td>
-                                <td>${order.getRoomNum()}</td>
-                                <td>${order.getBedNum()}</td>
-                                <td>${order.getPosition()}</td>
-                                <td>${order.getRegisDate()}</td>
-                                <td>${order.getStartDate()}</td>
-                                <td>${order.getEndDate()}</td>
-                                <td>${order.getPrice()}</td>
-                                <td>${order.getTotal()}</td>
-                                <td>
-                                    <form action="payment" method="POST">
-                                        <input type="hidden" name="regisId" value="${order.getRegisId()}">
-                                        <input type="hidden" name="totalBill" value="${order.getTotal()}">
-                                        <button type="submit" class="payment-btn">Thanh Toán</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </c:forEach>
+                        <c:choose>
+                            <c:when test="${empty order}">
+                                <tr>
+                                    <td colspan="8" style="text-align: center; padding: 20px; color: #666; font-style: italic;">
+                                        Bạn chưa có yêu cầu thanh toán các khoản phí !
+                                    </td>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="order" items="${order}" varStatus="loop">
+                                    <tr class="news-item">
+                                        <td>${loop.count}</td>
+                                        <td>${order.getRoomNum()}</td>
+                                        <td>${order.getBedNum()}</td>
+                                        <td>${order.getPosition()}</td>
+                                        <td>${order.getRegisDate()}</td>
+                                        <td>${order.getStartDate()}</td>
+                                        <td>${order.getEndDate()}</td>
+                                        <td>${order.getPrice()}</td>
+                                        <td>${order.getTotal()}</td>
+                                        <td>
+                                            <form action="payment" method="POST">
+                                                <input type="hidden" name="regisId" value="${order.getRegisId()}">
+                                                <input type="hidden" name="totalBill" value="${order.getTotal()}">
+                                                <button type="submit" class="payment-btn">Thanh Toán</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
                     </tbody>
                 </table>
             </div>

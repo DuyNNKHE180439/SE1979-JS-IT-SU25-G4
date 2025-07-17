@@ -82,7 +82,7 @@ public class UserServlet extends HttpServlet {
         } else if (action.equalsIgnoreCase("editProfile")) {
             request.getRequestDispatcher("view/editProfile.jsp").forward(request, response);
         } else if (action.equalsIgnoreCase("listOrder")) {
-            List<Order> order = BedDAO.getAllOrder();
+            List<Order> order = BedDAO.getAllOrderById(user.getUserId());
             request.setAttribute("order", order);
             request.getRequestDispatcher("view/listOrder.jsp").forward(request, response);
         } else if (action.equalsIgnoreCase("listResidentHistory")) {
