@@ -389,35 +389,4 @@ public class UserDAO {
             return false;
         }
     }
-     public static void main(String[] args) {
-        // Tạo địa chỉ mẫu
-        Address address = new Address();
-        address.setStreet("123 Đường Lê Lợi");
-        address.setWard("Phường 5");
-        address.setDistrict("Quận 3");
-        address.setProvince("TP.HCM");
-
-        // Tạo user mẫu
-        User user = new User();
-        user.setUserName("testuser123");
-        user.setPassWord("password123");
-        user.setEmail("testuser@example.com");
-        user.setFirstName("Minh");
-        user.setLastName("Nguyễn");
-        user.setDateOfBirth("2000-01-15");
-        user.setGender("Nam");
-        user.setPhoneNumber("0123456789");
-
-        // Gọi hàm đăng ký
-        User registered = UserDAO.registerUser(user, address); // Đổi YourDAOClass thành class thật bạn viết
-
-        if (registered != null) {
-            System.out.println("Đăng ký thành công!");
-            System.out.println("UserID: " + registered.getUserId());
-            System.out.println("AddressID: " + registered.getAddressId());
-            System.out.println("Username: " + registered.getUserName());
-        } else {
-            System.out.println("Đăng ký thất bại.");
-        }
-    }
 }
