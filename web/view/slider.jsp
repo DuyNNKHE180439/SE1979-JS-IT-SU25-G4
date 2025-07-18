@@ -40,7 +40,7 @@
         <a href="${pageContext.request.contextPath}/user?action=listResidentHistory"><i class="fa-solid fa-clock"></i> Lịch Sử Cư Trú</a>
         <a href="${pageContext.request.contextPath}/room"><i class="fa-solid fa-bed"></i> Đặt Phòng</a>
         <a href="${pageContext.request.contextPath}/register-list"><i class="fa-solid fa-file-alt"></i> Yêu Cầu Của Tôi</a>
-        <a href="#"><i class="fa-solid fa-plug"></i> Điện Nước Sử Dụng</a>
+        <a href="${pageContext.request.contextPath}/user?action=createLeaveRequest"><i class="fa-solid fa-bed"></i> Yêu Cầu Huỷ Phòng</a>
         <a href="${pageContext.request.contextPath}/user?action=listOrder"><i class="fa-solid fa-dollar-sign"></i> Thanh Toán</a>
     </div>
     <div class="logout">

@@ -89,6 +89,10 @@ public class UserServlet extends HttpServlet {
             List<Order> order = BedDAO.getResidentHistory(user.getUserId());
             request.setAttribute("order", order);
             request.getRequestDispatcher("view/listResidentHistory.jsp").forward(request, response);
+        } else if (action.equalsIgnoreCase("createLeaveRequest")) {
+            List<Order> order = BedDAO.getResidentHistory(user.getUserId());
+            request.setAttribute("order", order);
+            request.getRequestDispatcher("view/addLeaveRequest.jsp").forward(request, response);
         }
     }
 

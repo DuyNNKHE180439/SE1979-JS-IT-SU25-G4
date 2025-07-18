@@ -27,8 +27,10 @@
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/view/registerBed.jsp</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/view/editRegistration.jsp</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/view/slider.jsp</file>
+            <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/DeleteStudentServlet.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/dao/BedDAO.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/model/Address.java</file>
+            <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/model/Bed.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/images/FrogSleep.png</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/vendor/select2/select2.css</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/css/main.css</file>
@@ -43,7 +45,6 @@
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/view/editProfile.jsp</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/js/plugins/ckeditor/skins/moono/editor_iequirks.css</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/dao/StudentDAO.java</file>
-            <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/RegisterServlet.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/ListRoomServlet.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/model/viewRegistrations.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/resetPassword.java</file>
@@ -57,7 +58,6 @@
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/model/User.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/view/profile.jsp</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/constant/Iconstant.java</file>
-            <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/web/view/listOrder.jsp</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/controller/RoomServlet.java</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/nbproject/build-impl.xml</file>
             <file>file:/D:/Documents/SWP391/SWP391-SU25-SE1979-G4/src/java/com/vnpay/common/ajaxServlet.java</file>
