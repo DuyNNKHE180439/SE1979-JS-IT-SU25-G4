@@ -451,7 +451,8 @@
                             <th>Ngày Đăng Ký</th>
                             <th>Ngày Bắt Đầu</th>
                             <th>Ngày Kết Thúc</th>
-                            <th>Đơn Giá (VNĐ)</th>                         
+                            <th>Đơn Giá (VNĐ)</th> 
+                            <th>Tình Trạng</th>
                         </tr>
                     </thead>
                     <tbody>                       
@@ -474,6 +475,20 @@
                                         <td>${order.getStartDate()}</td>
                                         <td>${order.getEndDate()}</td>
                                         <td>${order.getPrice()}</td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${order.active == 'Valid'}">
+                                                    <span style="background-color: #d4edda; color: #155724; padding: 5px 10px; border-radius: 5px; font-weight: bold;">
+                                                        Còn Hiệu Lực
+                                                    </span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span style="background-color: #f8d7da; color: #721c24; padding: 5px 10px; border-radius: 5px; font-weight: bold;">
+                                                        Hết Hiệu Lực
+                                                    </span>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </c:otherwise>

@@ -399,6 +399,70 @@
                 transform: translateY(-2px);
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             }
+            .leave-request-form {
+                max-width: 600px;
+                margin: 20px auto;
+            }
+
+            .leave-request-form div {
+                margin-bottom: 20px;
+            }
+
+            .leave-request-form label {
+                display: block;
+                font-size: 14px;
+                font-weight: 600;
+                color: rgb(46, 78, 148);
+                margin-bottom: 8px;
+            }
+
+            .leave-request-form input[readonly] {
+                width: 100%;
+                padding: 12px;
+                font-size: 14px;
+                color: #4a5568;
+                background-color: #f7fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                cursor: not-allowed;
+            }
+
+            .leave-request-form textarea {
+                width: 100%;
+                padding: 12px;
+                font-size: 16px;
+                color: #333;
+                background-color: #fff;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                resize: vertical;
+                min-height: 120px;
+            }
+
+            .leave-request-form textarea:focus {
+                outline: none;
+                border-color: #3182ce;
+                box-shadow: 0 0 5px rgba(49, 130, 206, 0.3);
+            }
+
+            .leave-request-form button {
+                display: inline-block;
+                padding: 12px 24px;
+                background: linear-gradient(45deg, #F36F21, #ff8c00);
+                color: #fff;
+                border: none;
+                border-radius: 8px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            }
+
+            .leave-request-form button:hover {
+                background: linear-gradient(45deg, #e55e1a, #e07b00);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            }
 
         </style>
     </head>
@@ -436,63 +500,37 @@
 
         <jsp:include page="slider.jsp" />
 
-        <div class="main">
+        <div class="main" id="main">
             <div class="header">
-                <h1>TẠO YỀU CẦU HUỶ PHÒNG KTX</h1>
+                <h1>YÊU CẦU HỦY PHÒNG KTX</h1>
             </div>
             <div class="content">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Số Phòng</th>
-                            <th>Số Giường</th>
-                            <th>Vị Trí</th>
-                            <th>Ngày Đăng Ký</th>
-                            <th>Ngày Bắt Đầu</th>
-                            <th>Ngày Kết Thúc</th>
-                            <th>Đơn Giá (VNĐ)</th>   
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>                       
-                        <c:choose>
-                            <c:when test="${empty order}">
-                                <tr>
-                                    <td colspan="8" style="text-align: center; padding: 20px; color: #666; font-style: italic;">
-                                        Bạn chưa từng thuê phòng !
-                                    </td>
-                                </tr>
-                            </c:when>
-                            <c:otherwise>
-                                <c:forEach var="order" items="${order}" varStatus="loop">
-                                    <tr class="news-item">
-                                        <td>${loop.count}</td>
-                                        <td>${order.getRoomNum()}</td>
-                                        <td>${order.getBedNum()}</td>
-                                        <td>${order.getPosition()}</td>
-                                        <td>${order.getRegisDate()}</td>
-                                        <td>${order.getStartDate()}</td>
-                                        <td>${order.getEndDate()}</td>
-                                        <td>${order.getPrice()}</td>
-                                        <td>
-                                            <form action="user" method="GET">
-                                                <input type="hidden" name="action" value="editLeaveRequest">
-                                                <input type="hidden" name="regisId" value="${order.getRegisId()}">
-                                                <input type="hidden" name="roomNum" value="${order.getRoomNum()}">
-                                                <input type="hidden" name="bedNum" value="${order.getBedNum()}">
-                                                <input type="hidden" name="startDate" value="${order.getStartDate()}">
-                                                <input type="hidden" name="endDate" value="${order.getEndDate()}">
-                                                <button type="submit" class="payment-btn">Yêu Cầu</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </c:otherwise>
-                        </c:choose>
-                    </tbody>
-                </table>
+                <form action="user" method="post" class="leave-request-form">
+                    <input type="hidden" name="action" value="editLeaveRequest">
+                    <div>
+                        <label for="studentName">Phòng:</label>
+                        <input type="text"  name="studentName" value="${leave.getRoomNum()}" readonly>
+                    </div>
+                    <div>
+                        <label for="studentCode">Giường:</label>
+                        <input type="text"  name="studentCode" value="${leave.getBedNum()}" readonly>
+                    </div>
+                    <div>
+                        <label for="roomNumber">Ngày Bắt Đầu:</label>
+                        <input type="text"  name="roomNumber" value="${leave.getStartDate()}" readonly>
+                    </div>
+                    <div>
+                        <label for="bedNumber">Ngày Kết Thúc:</label>
+                        <input type="text"  name="bedNumber" value="${leave.getEndDate()}" readonly>
+                    </div>
+                    <div>
+                        <label for="reason">Lý Do Hủy Phòng (Không quá 250 ký tự):</label>
+                        <textarea  name="reason" required placeholder="Nhập lý do hủy phòng..."></textarea>
+                    </div>
+                    <button type="submit">Xác Nhận</button>
+                </form>
             </div>
+        </div>>
 
             <script>
                 const hamburger = document.getElementById('hamburger');

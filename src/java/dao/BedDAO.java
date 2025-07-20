@@ -120,7 +120,8 @@ public class BedDAO {
                                           JOIN dbo.Beds ON Beds.BedID = Registrations.BedID 
                                           JOIN dbo.Students ON Students.StudentID = Registrations.StudentID
                      			  JOIN dbo.Users ON Users.UserID = Students.UserID
-                     			 WHERE Registrations.Status='Complete' AND Students.UserID=?
+                     			 WHERE (Registrations.Status = 'Complete' OR Registrations.Status = 'Cancelled') 
+                                           AND Students.UserID = ?
                      """;
 
         try (PreparedStatement ps = DBContext.getInstance().getConnection().prepareStatement(sql)) {
@@ -143,6 +144,13 @@ public class BedDAO {
                 long months = ChronoUnit.MONTHS.between(startDate, endDate);
                 double total = months * rs.getDouble("Price");
                 or.setTotal(total);
+
+                LocalDate today = LocalDate.now();
+                if ("Complete".equalsIgnoreCase(rs.getString("Status")) && !endDate.isBefore(today)) {
+                    or.setActive("Valid");
+                } else {
+                    or.setActive("Invalid");
+                }
                 list.add(or);
             }
         } catch (Exception e) {
@@ -150,6 +158,5 @@ public class BedDAO {
         }
         return list;
     }
-  
 
 }

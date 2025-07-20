@@ -9,6 +9,7 @@ package model;
  * @author Admin
  */
 public class Order {
+
     private int stuNum;
     private int regisId;
     private String roomNum;
@@ -19,11 +20,12 @@ public class Order {
     private String endDate;
     private double price;
     private double total;
+    private String active;
 
     public Order() {
     }
 
-    public Order(int stuNum, int regisId, String roomNum, String bedNum, String position, String regisDate, String startDate, String endDate, double price, double total) {
+    public Order(int stuNum, int regisId, String roomNum, String bedNum, String position, String regisDate, String startDate, String endDate, double price, double total, String active) {
         this.stuNum = stuNum;
         this.regisId = regisId;
         this.roomNum = roomNum;
@@ -34,6 +36,15 @@ public class Order {
         this.endDate = endDate;
         this.price = price;
         this.total = total;
+        this.active = active;
+    }
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
     }
 
     public double getTotal() {
@@ -43,8 +54,6 @@ public class Order {
     public void setTotal(double total) {
         this.total = total;
     }
-
-   
 
     public int getStuNum() {
         return stuNum;
@@ -123,6 +132,4 @@ public class Order {
         return "Order{" + "stuNum=" + stuNum + ", regisId=" + regisId + ", roomNum=" + roomNum + ", bedNum=" + bedNum + ", position=" + position + ", regisDate=" + regisDate + ", startDate=" + startDate + ", endDate=" + endDate + ", price=" + price + ", total=" + total + '}';
     }
 
-   
-    
 }

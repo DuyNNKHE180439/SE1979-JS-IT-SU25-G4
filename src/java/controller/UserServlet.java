@@ -19,7 +19,9 @@ import java.util.ArrayList;
 import model.Profile;
 import model.User;
 import model.Order;
+import model.LeaveRequest;
 import dao.BedDAO;
+import dao.StudentDAO;
 import java.util.List;
 
 /**
@@ -90,9 +92,31 @@ public class UserServlet extends HttpServlet {
             request.setAttribute("order", order);
             request.getRequestDispatcher("view/listResidentHistory.jsp").forward(request, response);
         } else if (action.equalsIgnoreCase("createLeaveRequest")) {
-            List<Order> order = BedDAO.getResidentHistory(user.getUserId());
+            List<Order> or = BedDAO.getResidentHistory(user.getUserId());
+            List<Order> order = new ArrayList<>();
+            for (Order order1 : or) {
+                if (order1.getActive().equalsIgnoreCase("Valid")) {
+                    order.add(order1);
+                }
+            }
             request.setAttribute("order", order);
             request.getRequestDispatcher("view/addLeaveRequest.jsp").forward(request, response);
+        } else if (action.equalsIgnoreCase("editLeaveRequest")) {
+            String roomNum= request.getParameter("roomNum");
+            String bedNum= request.getParameter("bedNum");
+            String startDate= request.getParameter("startDate");
+            String endDate= request.getParameter("endDate");
+            int regisId= Integer.parseInt(request.getParameter("regisId"));
+            int stuId= StudentDAO.getStudentIdByUserId(user.getUserId());
+            LeaveRequest leave= new LeaveRequest();
+            leave.setStuId(stuId);
+            leave.setRegisId(regisId);
+            leave.setBedNum(bedNum);
+            leave.setEndDate(endDate);
+            leave.setRoomNum(roomNum);
+            leave.setStartDate(startDate);
+            request.setAttribute("leave", leave);
+            request.getRequestDispatcher("view/editLeaveRequest.jsp").forward(request, response);
         }
     }
 
@@ -191,6 +215,7 @@ public class UserServlet extends HttpServlet {
                 request.setAttribute("success", "Cập nhật thông tin thất bại!");
                 request.getRequestDispatcher("view/profile.jsp").forward(request, response);
             }
+        } else if(action.equalsIgnoreCase("editLeaveRequest")){
         }
     }
 
