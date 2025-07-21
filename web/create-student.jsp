@@ -38,7 +38,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Password -->
+                                <!-- Passwords -->
                                 <div class="form-group">
                                     <label for="password">Mật khẩu *</label>
                                     <input type="password" class="form-control" name="password" id="password" required />
