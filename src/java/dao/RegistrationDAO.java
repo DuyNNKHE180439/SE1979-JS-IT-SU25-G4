@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import model.Bed;
+import model.LeaveRequest;
 import model.Registration;
 import model.Room;
 import model.viewRegistrations;
@@ -262,6 +263,29 @@ public class RegistrationDAO {
             statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    public static boolean addLeaveRequest(LeaveRequest leave) {
+        String sql = """
+                     INSERT dbo.LeaveRequests
+                     (
+                         StudentID,
+                         Reason,
+                         RegistrationID
+                     )
+                     VALUES
+                     (?,?,?)
+                     """;
+        try {
+            PreparedStatement ps = DBContext.getInstance().getConnection().prepareStatement(sql);
+            ps.setInt(1, leave.getStuId());
+            ps.setString(2, leave.getReason());
+            ps.setInt(3, leave.getRegisId());
+            int affected = ps.executeUpdate();
+            return affected > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

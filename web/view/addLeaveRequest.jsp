@@ -407,6 +407,12 @@
             alert("${mess}");
         </script>
     </c:if>
+    <c:if test="${not empty sessionScope.leave}">
+        <script>
+        alert("${sessionScope.leave}");
+        </script>
+        <c:remove var="leave" scope="session" />
+    </c:if>
     <body>
         <div class="nav-bar">
             <div class="hamburger" id="hamburger">
