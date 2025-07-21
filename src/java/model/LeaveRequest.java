@@ -23,11 +23,12 @@ public class LeaveRequest {
     private String bedNum;
     private String startDate;
     private String endDate;
+    private String fullName;
 
     public LeaveRequest() {
     }
 
-    public LeaveRequest(int leaveId, int stuId, int regisId, String reason, String status, int approveBy, String approveAt, String createAt, String UpdateAt, String roomNum, String bedNum, String startDate, String endDate) {
+    public LeaveRequest(int leaveId, int stuId, int regisId, String reason, String status, int approveBy, String approveAt, String createAt, String UpdateAt, String roomNum, String bedNum, String startDate, String endDate, String fullName) {
         this.leaveId = leaveId;
         this.stuId = stuId;
         this.regisId = regisId;
@@ -41,8 +42,18 @@ public class LeaveRequest {
         this.bedNum = bedNum;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.fullName = fullName;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+   
     public int getLeaveId() {
         return leaveId;
     }
@@ -151,6 +162,5 @@ public class LeaveRequest {
     public String toString() {
         return "LeaveRequest{" + "leaveId=" + leaveId + ", stuId=" + stuId + ", regisId=" + regisId + ", reason=" + reason + ", status=" + status + ", approveBy=" + approveBy + ", approveAt=" + approveAt + ", createAt=" + createAt + ", UpdateAt=" + UpdateAt + ", roomNum=" + roomNum + ", bedNum=" + bedNum + ", startDate=" + startDate + ", endDate=" + endDate + '}';
     }
-    
 
 }

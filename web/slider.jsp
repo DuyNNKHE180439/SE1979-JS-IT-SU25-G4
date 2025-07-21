@@ -272,6 +272,12 @@
                                 <i class="fa fa-globe"></i>Quản lí yêu cầu phòng<span></span>
                             </a>
                         </li>
+                        
+                        <li>
+                            <a href="Manager?action=viewLeave">
+                                <i class="fa fa-globe"></i><span>Quản lí yêu cầu huỷ phòng</span>
+                            </a>
+                        </li>
 
                     </ul>
                 </section>

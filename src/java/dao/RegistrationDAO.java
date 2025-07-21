@@ -265,6 +265,7 @@ public class RegistrationDAO {
             e.printStackTrace();
         }
     }
+
     public static boolean addLeaveRequest(LeaveRequest leave) {
         String sql = """
                      INSERT dbo.LeaveRequests
@@ -331,4 +332,35 @@ public class RegistrationDAO {
         }
     }
 
+    public static List<LeaveRequest> getAllPendingLeaveRequest() {
+        List<LeaveRequest> list = new ArrayList<>();
+        String sql = """
+                    SELECT * FROM dbo.LeaveRequests 
+                     JOIN dbo.Registrations ON Registrations.RegistrationID = LeaveRequests.RegistrationID
+                     JOIN dbo.Rooms ON Rooms.RoomID = Registrations.RoomID 
+                     JOIN dbo.Beds ON Beds.BedID = Registrations.BedID 
+                     JOIN dbo.Students ON Students.StudentID = Registrations.StudentID 
+                     JOIN dbo.Users ON Users.UserID = Students.UserID
+                     WHERE LeaveRequests.Status= 'Pending'
+                     """;
+
+        try (PreparedStatement ps = DBContext.getInstance().getConnection().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                LeaveRequest reg = new LeaveRequest();
+                reg.setRegisId(rs.getInt("RegistrationID"));
+                reg.setFullName(rs.getString("FirstName") + " " + rs.getString("LastName"));
+                reg.setRoomNum(rs.getString("RoomNumber"));
+                reg.setBedNum(rs.getString("BedNumber"));
+                reg.setStuId(rs.getInt("StudentID"));
+                reg.setLeaveId(rs.getInt("LeaveRequestID"));
+                reg.setReason(rs.getString("Reason"));
+                reg.setStartDate(rs.getString("StartDate").substring(0, 10));
+                reg.setEndDate(rs.getString("EndDate").substring(0, 10));
+                list.add(reg);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

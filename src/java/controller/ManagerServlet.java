@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.User;
 import model.viewRegistrations;
+import model.LeaveRequest;
 
 /**
  *
@@ -78,6 +79,12 @@ public class ManagerServlet extends HttpServlet {
             request.getRequestDispatcher("viewRegistrations.jsp").forward(request, response);
             return;
         }
+        if ("viewLeave".equalsIgnoreCase(action)) {
+            List<LeaveRequest> reg = RegistrationDAO.getAllPendingLeaveRequest();
+            request.setAttribute("list", reg);
+            request.getRequestDispatcher("viewLeaveRequest.jsp").forward(request, response);
+            return;
+        }
     }
 
     /**
@@ -94,16 +101,16 @@ public class ManagerServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
         int id = Integer.parseInt(request.getParameter("id"));
-        int userId= Integer.parseInt(request.getParameter("userId"));
+        int userId = Integer.parseInt(request.getParameter("userId"));
         if (action == null) {
             // do nothing
         } else if (action.equalsIgnoreCase("approve")) {
-            RegistrationDAO.updateRegistrationByApprove(id,userId ,"Approve");
+            RegistrationDAO.updateRegistrationByApprove(id, userId, "Approve");
             request.setAttribute("mess", "Đồng Ý Thành Công!");
             response.sendRedirect("Manager?action=view");
             return;
         } else if (action.equalsIgnoreCase("reject")) {
-            RegistrationDAO.updateRegistrationByApprove(id,userId ,"Reject");
+            RegistrationDAO.updateRegistrationByApprove(id, userId, "Reject");
             request.setAttribute("mess", "Từ Chối Thành Công!");
             response.sendRedirect("Manager?action=view");
             return;

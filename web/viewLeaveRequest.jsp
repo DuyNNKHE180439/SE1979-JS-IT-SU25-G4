@@ -1,4 +1,8 @@
-
+<%-- 
+    Document   : viewLeaveRequest
+    Created on : Jul 21, 2025, 11:39:57 PM
+    Author     : Admin
+--%>
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -55,15 +59,10 @@
                                     <table id="registrationTable" class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
                                                 <th>Sinh Viên</th>
                                                 <th>Phòng</th>
-                                                <th>Giường</th>
-                                                <th>Vị Trí</th>
-                                                <th>Đơn Giá</th>
-                                                <th>Tối Đa (người)</th>
-                                                <th>Hiện Có (người)</th>
-                                                <th>Ngày Đăng Ký</th>
+                                                <th>Giường</th>              
+                                                <th>Lý Do</th>
                                                 <th>Ngày Bắt Đầu</th>
                                                 <th>Ngày Kết Thúc</th>
                                             </tr>
@@ -71,27 +70,22 @@
                                         <tbody>
                                             <c:forEach var="reg" items="${list}">
                                                 <tr>
-                                                    <td>${reg.getReId()}</td>
-                                                    <td>${reg.getStuName()}</td>
-                                                    <td>${reg.getRoomName()}</td>
-                                                    <td>${reg.getBedName()}</td>
-                                                    <td>${reg.getPosition()}</td>
-                                                    <td>${reg.getPrice()}</td>
-                                                    <td>${reg.getTotal()}</td>
-                                                    <td>${reg.getCurrent()}</td>
-                                                    <td>${reg.getRegiDate()}</td>
+                                                    <td>${reg.getFullName()}</td>
+                                                    <td>${reg.getRoomNum()}</td>
+                                                    <td>${reg.getBedNum()}</td>
+                                                    <td>${reg.getReason()}</td>
                                                     <td>${reg.getStartDate()}</td>
                                                     <td>${reg.getEndDate()}</td>
 
                                                     <td>
                                                         <form method="post" action="Manager" style="display:inline;">
-                                                            <input type="hidden" name="id" value="${reg.getReId()}" />
-                                                            <input type="hidden" name="userId" value="${user.getUserId()}" />
+                                                            <input type="hidden" name="id" value="" />
+                                                            <input type="hidden" name="userId" value="" />
                                                             <button type="submit" name="action" value="approve" class="btn btn-warning btn-xs">Chấp Nhận</button>
                                                         </form>
                                                         <form method="post" action="Manager" style="display:inline;">
-                                                            <input type="hidden" name="id" value="${reg.getReId()}" />
-                                                            <input type="hidden" name="userId" value="${user.getUserId()}" />
+                                                            <input type="hidden" name="id" value="$" />
+                                                            <input type="hidden" name="userId" value="$" />
                                                             <button type="submit" name="action" value="reject" class="btn btn-danger btn-xs">Từ Chối</button>
                                                         </form>
                                                     </td>
