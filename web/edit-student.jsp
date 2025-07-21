@@ -60,7 +60,7 @@
                                 <input type="text" class="form-control" name="lastName" id="lastName" value="${student.user.lastName}" required />
                             </div>
 
-                            <!-- Role -->
+                            <!-- Roles -->
                             <div class="form-group">
                                 <label for="roleId">Vai trò *</label>
                                 <select class="form-control" name="roleId" id="roleId" onchange="toggleStudentFields()" required>
