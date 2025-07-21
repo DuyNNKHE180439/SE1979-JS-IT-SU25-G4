@@ -79,14 +79,16 @@
 
                                                     <td>
                                                         <form method="post" action="Manager" style="display:inline;">
-                                                            <input type="hidden" name="id" value="" />
-                                                            <input type="hidden" name="userId" value="" />
-                                                            <button type="submit" name="action" value="approve" class="btn btn-warning btn-xs">Chấp Nhận</button>
+                                                            <input type="hidden" name="regisId" value="${reg.getRegisId()}" />
+                                                            <input type="hidden" name="leaveId" value="${reg.getLeaveId()}" />
+                                                            <input type="hidden" name="bedId" value="${reg.getBedId()}" />
+                                                            <button type="submit" name="action" value="approveLeave" class="btn btn-warning btn-xs">Chấp Nhận</button>
                                                         </form>
                                                         <form method="post" action="Manager" style="display:inline;">
-                                                            <input type="hidden" name="id" value="$" />
-                                                            <input type="hidden" name="userId" value="$" />
-                                                            <button type="submit" name="action" value="reject" class="btn btn-danger btn-xs">Từ Chối</button>
+                                                            <input type="hidden" name="regisId" value="${reg.getRegisId()}" />
+                                                            <input type="hidden" name="leaveId" value="${reg.getLeaveId()}" />
+                                                            <input type="hidden" name="bedId" value="${reg.getBedId()}" />
+                                                            <button type="submit" name="action" value="rejectLeave" class="btn btn-danger btn-xs">Từ Chối</button>
                                                         </form>
                                                     </td>
                                                 </tr>

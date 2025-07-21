@@ -81,7 +81,7 @@ public class BedDAO {
                                           JOIN dbo.Beds ON Beds.BedID = Registrations.BedID 
                      			  JOIN dbo.Students ON Students.StudentID = Registrations.StudentID
                      			  JOIN dbo.Users ON Users.UserID = Students.UserID
-                                          WHERE Registrations.Status ='Approve' AND Students.UserID=?
+                                          WHERE (Registrations.Status ='Approve'OR Registrations.Status = 'Fail') AND Students.UserID=?
                      """;
 
         try (PreparedStatement ps = DBContext.getInstance().getConnection().prepareStatement(sql)) {

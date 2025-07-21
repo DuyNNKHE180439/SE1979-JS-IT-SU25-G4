@@ -12,7 +12,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.User;
 import model.viewRegistrations;
 import model.LeaveRequest;
@@ -99,20 +102,48 @@ public class ManagerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
         String action = request.getParameter("action");
-        int id = Integer.parseInt(request.getParameter("id"));
-        int userId = Integer.parseInt(request.getParameter("userId"));
         if (action == null) {
             // do nothing
         } else if (action.equalsIgnoreCase("approve")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            int userId = Integer.parseInt(request.getParameter("userId"));
             RegistrationDAO.updateRegistrationByApprove(id, userId, "Approve");
             request.setAttribute("mess", "Đồng Ý Thành Công!");
             response.sendRedirect("Manager?action=view");
             return;
         } else if (action.equalsIgnoreCase("reject")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            int userId = Integer.parseInt(request.getParameter("userId"));
             RegistrationDAO.updateRegistrationByApprove(id, userId, "Reject");
             request.setAttribute("mess", "Từ Chối Thành Công!");
             response.sendRedirect("Manager?action=view");
+            return;
+        } else if (action.equalsIgnoreCase("approveLeave")) {
+            int leaveId = Integer.parseInt(request.getParameter("leaveId"));
+            int regisId = Integer.parseInt(request.getParameter("regisId"));
+            int bedId = Integer.parseInt(request.getParameter("bedId"));
+            try {
+                RegistrationDAO.updateLeaveRequestByApprove(leaveId, user.getUserId(), bedId, regisId);
+            } catch (SQLException ex) {
+                Logger.getLogger(ManagerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            request.setAttribute("mess", "Đồng Ý Thành Công!");
+            response.sendRedirect("Manager?action=viewLeave");
+            return;
+        } else if (action.equalsIgnoreCase("rejectLeave")) {
+            int leaveId = Integer.parseInt(request.getParameter("leaveId"));
+            int regisId = Integer.parseInt(request.getParameter("regisId"));
+            int bedId = Integer.parseInt(request.getParameter("bedId"));
+            try {
+                RegistrationDAO.updateLeaveRequestByReject(leaveId, user.getUserId());
+            } catch (SQLException ex) {
+                Logger.getLogger(ManagerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            request.setAttribute("mess", "Từ Chối Thành Công!");
+            response.sendRedirect("Manager?action=viewLeave");
             return;
         }
     }

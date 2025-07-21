@@ -13,6 +13,7 @@ public class LeaveRequest {
     private int leaveId;
     private int stuId;
     private int regisId;
+    private int bedId;
     private String reason;
     private String status;
     private int approveBy;
@@ -28,10 +29,11 @@ public class LeaveRequest {
     public LeaveRequest() {
     }
 
-    public LeaveRequest(int leaveId, int stuId, int regisId, String reason, String status, int approveBy, String approveAt, String createAt, String UpdateAt, String roomNum, String bedNum, String startDate, String endDate, String fullName) {
+    public LeaveRequest(int leaveId, int stuId, int regisId, int bedId, String reason, String status, int approveBy, String approveAt, String createAt, String UpdateAt, String roomNum, String bedNum, String startDate, String endDate, String fullName) {
         this.leaveId = leaveId;
         this.stuId = stuId;
         this.regisId = regisId;
+        this.bedId = bedId;
         this.reason = reason;
         this.status = status;
         this.approveBy = approveBy;
@@ -44,6 +46,16 @@ public class LeaveRequest {
         this.endDate = endDate;
         this.fullName = fullName;
     }
+
+    public int getBedId() {
+        return bedId;
+    }
+
+    public void setBedId(int bedId) {
+        this.bedId = bedId;
+    }
+
+   
 
     public String getFullName() {
         return fullName;
@@ -160,7 +172,9 @@ public class LeaveRequest {
 
     @Override
     public String toString() {
-        return "LeaveRequest{" + "leaveId=" + leaveId + ", stuId=" + stuId + ", regisId=" + regisId + ", reason=" + reason + ", status=" + status + ", approveBy=" + approveBy + ", approveAt=" + approveAt + ", createAt=" + createAt + ", UpdateAt=" + UpdateAt + ", roomNum=" + roomNum + ", bedNum=" + bedNum + ", startDate=" + startDate + ", endDate=" + endDate + '}';
+        return "LeaveRequest{" + "leaveId=" + leaveId + ", stuId=" + stuId + ", regisId=" + regisId + ", bedId=" + bedId + ", reason=" + reason + ", status=" + status + ", approveBy=" + approveBy + ", approveAt=" + approveAt + ", createAt=" + createAt + ", UpdateAt=" + UpdateAt + ", roomNum=" + roomNum + ", bedNum=" + bedNum + ", startDate=" + startDate + ", endDate=" + endDate + ", fullName=" + fullName + '}';
     }
+
+  
 
 }

@@ -352,6 +352,7 @@ public class RegistrationDAO {
                 reg.setRoomNum(rs.getString("RoomNumber"));
                 reg.setBedNum(rs.getString("BedNumber"));
                 reg.setStuId(rs.getInt("StudentID"));
+                reg.setBedId(rs.getInt("BedID"));
                 reg.setLeaveId(rs.getInt("LeaveRequestID"));
                 reg.setReason(rs.getString("Reason"));
                 reg.setStartDate(rs.getString("StartDate").substring(0, 10));
@@ -362,5 +363,79 @@ public class RegistrationDAO {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public static void updateLeaveRequestByApprove(int leaveId, int userId, int bedId, int regisId) throws SQLException {
+        DBContext db = DBContext.getInstance();
+        Connection conn = db.getConnection();
+        try {
+            conn.setAutoCommit(false);
+
+            String sqlLeave = "UPDATE dbo.LeaveRequests \n"
+                    + "SET Status = 'Approve', \n"
+                    + "    ApprovedBy = ?, \n"
+                    + "    ApprovedAt = GETDATE() \n"
+                    + "WHERE LeaveRequestID = ?";
+            PreparedStatement statementLeave = conn.prepareStatement(sqlLeave);
+            statementLeave.setInt(1, userId);
+            statementLeave.setInt(2, leaveId);
+            statementLeave.executeUpdate();
+
+            String sqlBed = "UPDATE dbo.Beds \n"
+                    + "SET Status = 'Available' \n"
+                    + "WHERE BedID = ?";
+            PreparedStatement statementBed = conn.prepareStatement(sqlBed);
+            statementBed.setInt(1, bedId);
+            statementBed.executeUpdate();
+
+            String sqlReg = "UPDATE dbo.Registrations \n"
+                    + "SET Status = 'Cancelled' \n"
+                    + "WHERE RegistrationID = ?";
+            PreparedStatement statementReg = conn.prepareStatement(sqlReg);
+            statementReg.setInt(1, regisId);
+            statementReg.executeUpdate();
+
+            conn.commit();
+        } catch (SQLException e) {
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.setAutoCommit(true);
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public static void updateLeaveRequestByReject(int leaveId, int userId) throws SQLException {
+        DBContext db = DBContext.getInstance();
+        Connection conn = db.getConnection();
+        try {
+            conn.setAutoCommit(false);
+
+            String sql = "UPDATE dbo.LeaveRequests \n"
+                    + "SET Status = 'Reject', \n"
+                    + "    ApprovedBy = ?, \n"
+                    + "    ApprovedAt = GETDATE() \n"
+                    + "WHERE LeaveRequestID = ?";
+            PreparedStatement statementLeave = conn.prepareStatement(sql);
+            statementLeave.setInt(1, userId);
+            statementLeave.setInt(2, leaveId);
+            statementLeave.executeUpdate();
+
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
