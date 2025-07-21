@@ -507,21 +507,22 @@
             <div class="content">
                 <form action="user" method="post" class="leave-request-form">
                     <input type="hidden" name="action" value="editLeaveRequest">
+                    <input type="hidden" name="regisId" value="${leave.getRegisId()}">
                     <div>
                         <label for="studentName">Phòng:</label>
-                        <input type="text"  name="studentName" value="${leave.getRoomNum()}" readonly>
+                        <input type="text"   value="${leave.getRoomNum()}" readonly>
                     </div>
                     <div>
                         <label for="studentCode">Giường:</label>
-                        <input type="text"  name="studentCode" value="${leave.getBedNum()}" readonly>
+                        <input type="text"   value="${leave.getBedNum()}" readonly>
                     </div>
                     <div>
                         <label for="roomNumber">Ngày Bắt Đầu:</label>
-                        <input type="text"  name="roomNumber" value="${leave.getStartDate()}" readonly>
+                        <input type="text"   value="${leave.getStartDate()}" readonly>
                     </div>
                     <div>
                         <label for="bedNumber">Ngày Kết Thúc:</label>
-                        <input type="text"  name="bedNumber" value="${leave.getEndDate()}" readonly>
+                        <input type="text"   value="${leave.getEndDate()}" readonly>
                     </div>
                     <div>
                         <label for="reason">Lý Do Hủy Phòng (Không quá 250 ký tự):</label>

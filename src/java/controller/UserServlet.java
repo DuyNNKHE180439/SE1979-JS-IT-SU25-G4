@@ -21,6 +21,7 @@ import model.User;
 import model.Order;
 import model.LeaveRequest;
 import dao.BedDAO;
+import dao.RegistrationDAO;
 import dao.StudentDAO;
 import java.util.List;
 
@@ -102,13 +103,13 @@ public class UserServlet extends HttpServlet {
             request.setAttribute("order", order);
             request.getRequestDispatcher("view/addLeaveRequest.jsp").forward(request, response);
         } else if (action.equalsIgnoreCase("editLeaveRequest")) {
-            String roomNum= request.getParameter("roomNum");
-            String bedNum= request.getParameter("bedNum");
-            String startDate= request.getParameter("startDate");
-            String endDate= request.getParameter("endDate");
-            int regisId= Integer.parseInt(request.getParameter("regisId"));
-            int stuId= StudentDAO.getStudentIdByUserId(user.getUserId());
-            LeaveRequest leave= new LeaveRequest();
+            String roomNum = request.getParameter("roomNum");
+            String bedNum = request.getParameter("bedNum");
+            String startDate = request.getParameter("startDate");
+            String endDate = request.getParameter("endDate");
+            int regisId = Integer.parseInt(request.getParameter("regisId"));
+            int stuId = StudentDAO.getStudentIdByUserId(user.getUserId());
+            LeaveRequest leave = new LeaveRequest();
             leave.setStuId(stuId);
             leave.setRegisId(regisId);
             leave.setBedNum(bedNum);
@@ -133,6 +134,8 @@ public class UserServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
         String action = request.getParameter("action");
         if (action == null) {
             // do nothing
@@ -206,7 +209,6 @@ public class UserServlet extends HttpServlet {
             }
             // Update user in DB
             if (UserDAO.updateUserAddress(profile, addressId, userId)) {
-                HttpSession session = request.getSession();
                 session.setAttribute("profile", profile);
                 request.setAttribute("success", "Cập nhật thông tin thành công!");
                 request.getRequestDispatcher("view/profile.jsp").forward(request, response);
@@ -215,7 +217,24 @@ public class UserServlet extends HttpServlet {
                 request.setAttribute("success", "Cập nhật thông tin thất bại!");
                 request.getRequestDispatcher("view/profile.jsp").forward(request, response);
             }
-        } else if(action.equalsIgnoreCase("editLeaveRequest")){
+        } else if (action.equalsIgnoreCase("editLeaveRequest")) {
+            int regisId= Integer.parseInt(request.getParameter("regisId"));
+            int stuId= StudentDAO.getStudentIdByUserId(user.getUserId());
+            String reason= request.getParameter("reason");
+            LeaveRequest leave= new LeaveRequest();
+            leave.setRegisId(regisId);
+            leave.setStuId(stuId);
+            leave.setReason(reason);
+            boolean isOk = RegistrationDAO.addLeaveRequest(leave);
+            if(isOk){
+                session.setAttribute("leave", "Gửi yêu cầu thành công!");
+                response.sendRedirect("user?action=createLeaveRequest");
+                return;
+            }else{
+                session.setAttribute("leave", "Gửi yêu cầu thất bại hoặc yêu cầu bị trùng lặp!");
+                response.sendRedirect("user?action=createLeaveRequest");
+                return;
+            }
         }
     }
 
