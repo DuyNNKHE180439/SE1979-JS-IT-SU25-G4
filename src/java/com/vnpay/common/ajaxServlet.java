@@ -6,7 +6,8 @@
 package com.vnpay.common;
 
 import dao.PaymentDAO;
-import java.io.IOException;import java.net.URLEncoder;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,47 +34,46 @@ import model.User;
 public class ajaxServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String bankCode = req.getParameter("bankCode");
-        int regisId= Integer.parseInt(req.getParameter("regisId"));
-         HttpSession session = req.getSession();
+        int regisId = Integer.parseInt(req.getParameter("regisId"));
+        HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        if(req.getParameter("totalBill") == null) {
-         resp.sendRedirect("user?action=listOrder");//create cart servlet
-         return;
+        if (req.getParameter("totalBill") == null) {
+            resp.sendRedirect("user?action=listOrder");//create cart servlet
+            return;
         }
         double amountDouble = Double.parseDouble(req.getParameter("totalBill"));
-      
-                
-        Payment payment= new Payment();
+
+        Payment payment = new Payment();
         payment.setUserId(user.getUserId());
         payment.setAmount(amountDouble);
         payment.setRegisId(regisId);
-        
+
         int paymentId = PaymentDAO.insertPayment(payment);
-        
-        if(paymentId < 1) {
-          resp.sendRedirect("user?action=listOrder");
-          return;
+
+        if (paymentId < 1) {
+            resp.sendRedirect("user?action=listOrder");
+            return;
         }
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";
-        
+
         long amount = (long) (amountDouble * 100);
-        String vnp_TxnRef = paymentId+"_"+regisId;//dky ma rieng
+        String vnp_TxnRef = paymentId + "_" + regisId;//dky ma rieng
         String vnp_IpAddr = Config.getIpAddress(req);
 
         String vnp_TmnCode = Config.vnp_TmnCode;
-        
+
         Map<String, String> vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version", vnp_Version);
         vnp_Params.put("vnp_Command", vnp_Command);
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
         vnp_Params.put("vnp_Amount", String.valueOf(amount));
         vnp_Params.put("vnp_CurrCode", "VND");
-        
+
         if (bankCode != null && !bankCode.isEmpty()) {
             vnp_Params.put("vnp_BankCode", bankCode);
         }
@@ -87,18 +87,18 @@ public class ajaxServlet extends HttpServlet {
         } else {
             vnp_Params.put("vnp_Locale", "vn");
         }
-        vnp_Params.put("vnp_ReturnUrl", Config.vnp_ReturnUrl);
+        vnp_Params.put("vnp_ReturnUrl", Config.getReturnUrl(req));
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
         String vnp_CreateDate = formatter.format(cld.getTime());
         vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
-        
+
         cld.add(Calendar.MINUTE, 15);
         String vnp_ExpireDate = formatter.format(cld.getTime());
         vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
-        
+
         List fieldNames = new ArrayList(vnp_Params.keySet());
         Collections.sort(fieldNames);
         StringBuilder hashData = new StringBuilder();
