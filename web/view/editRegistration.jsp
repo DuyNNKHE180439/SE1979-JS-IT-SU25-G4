@@ -419,6 +419,41 @@
                 }
             }
         </style>
+        <style>
+            label {
+                font-weight: bold;
+                display: block;
+                margin-top: 12px;
+                margin-bottom: 6px;
+                font-size: 16px;
+            }
+
+            #months {
+                width: 100%;
+                max-width: 300px;
+                padding: 10px;
+                font-size: 15px;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+                box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+                transition: border-color 0.3s, box-shadow 0.3s;
+            }
+
+            #months:focus {
+                outline: none;
+                border-color: #4285f4;
+                box-shadow: 0 0 8px rgba(66, 133, 244, 0.4);
+            }
+
+            #months:hover {
+                border-color: #4285f4;
+            }
+
+            /* Optional - hover highlight for options (browser dependent) */
+            #months option:hover {
+                background-color: #f1f1f1;
+            }
+        </style>
     </head>
 
     <body>
@@ -454,21 +489,39 @@
             <h2>Chỉnh sửa yêu cầu đăng ký giường</h2>
 
             <div class="form-container">
-                <form action="edit-request" method="post">
+                <form action="${pageContext.request.contextPath}/edit-request" method="post" onsubmit="return validateEditForm()">
                     <input type="hidden" name="registrationID" value="${registration.registrationID}" />
 
                     <p><strong>Phòng:</strong> ${registration.room.roomNumber}</p>
                     <p><strong>Giường:</strong> ${registration.bed.bedNumber}</p>
 
+                    <%
+                        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+                        String today = sdf.format(new java.util.Date());
+                    %>
+
                     <label for="startDate">Ngày bắt đầu:</label>
-                    <input type="date" name="startDate" value="<fmt:formatDate value='${registration.startDate}' pattern='yyyy-MM-dd'/>" required>
+                    <input type="date" id="startDate" name="startDate"
+                           value="<fmt:formatDate value='${registration.startDate}' pattern='yyyy-MM-dd'/>"
+                           min="<%= today %>" required onchange="updateEndDate()" />
+
+                    <label for="months">Thời gian thuê (tháng):</label>
+                    <select id="months" name="months" onchange="updateEndDate()" required>
+                        <option value="1">1 tháng</option>
+                        <option value="2">2 tháng</option>
+                        <option value="3">3 tháng</option>
+                        <option value="6">6 tháng</option>
+                        <option value="12">12 tháng</option>
+                    </select>
 
                     <label for="endDate">Ngày kết thúc:</label>
-                    <input type="date" name="endDate" value="<fmt:formatDate value='${registration.endDate}' pattern='yyyy-MM-dd'/>" required>
+                    <input type="date" id="endDate" name="endDate"
+                           value="<fmt:formatDate value='${registration.endDate}' pattern='yyyy-MM-dd'/>"
+                           readonly required />
 
                     <div style="margin-top: 24px;">
                         <button type="submit">Lưu thay đổi</button>
-                        <a href="register-list">Hủy</a>
+                        <a href="${pageContext.request.contextPath}/register-list" class="back-btn">Hủy</a>
                     </div>
                 </form>
             </div>
@@ -495,6 +548,73 @@
                 if (!notification.contains(e.target)) {
                     popup.classList.remove('active');
                 }
+            });
+        </script>
+        <script>
+            function updateEndDate() {
+                const startInput = document.getElementById("startDate").value;
+                const months = parseInt(document.getElementById("months").value || "1");
+
+                if (!startInput) {
+                    document.getElementById("endDate").value = "";
+                    return;
+                }
+
+                const startDate = new Date(startInput);
+                const endDate = new Date(startDate);
+                endDate.setMonth(endDate.getMonth() + months);
+
+                // Xử lý ngày kết thúc nếu ngày đầu tháng không tồn tại (ví dụ 31/1 + 1 tháng)
+                if (endDate.getDate() !== startDate.getDate()) {
+                    endDate.setDate(0);
+                }
+
+                const formatted = endDate.toISOString().split("T")[0];
+                document.getElementById("endDate").value = formatted;
+            }
+
+            function validateEditForm() {
+                const start = document.getElementById("startDate").value;
+                const end = document.getElementById("endDate").value;
+                const today = new Date().toISOString().split("T")[0];
+
+                if (!start || !end) {
+                    alert("Vui lòng chọn ngày bắt đầu và thời gian thuê.");
+                    return false;
+                }
+
+                if (start < today) {
+                    alert("Ngày bắt đầu không được nhỏ hơn ngày hôm nay.");
+                    return false;
+                }
+
+                return true;
+            }
+
+            function calculateInitialMonths() {
+                const startInput = document.getElementById("startDate").value;
+                const endInput = document.getElementById("endDate").value;
+
+                if (startInput && endInput) {
+                    const startDate = new Date(startInput);
+                    const endDate = new Date(endInput);
+
+                    let months = (endDate.getFullYear() - startDate.getFullYear()) * 12 +
+                            (endDate.getMonth() - startDate.getMonth());
+
+                    if (endDate.getDate() < startDate.getDate())
+                        months--;
+
+                    months = Math.max(1, months); // ít nhất là 1 tháng
+
+                    // Gán giá trị tháng vào select
+                    document.getElementById("months").value = months;
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                calculateInitialMonths();
+                updateEndDate();
             });
         </script>
     </body>

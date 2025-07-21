@@ -1,6 +1,7 @@
 package controller;
 
 import dao.BedDAO;
+import dao.RegistrationDAO;
 import dao.RoomDAO;
 import model.Bed;
 import model.Room;
@@ -25,6 +26,8 @@ public class RoomDetailServlet extends HttpServlet {
                 response.sendRedirect("bookingBed.jsp");
                 return;
             }
+            // Gọi cập nhật trước khi load dữ liệu
+            RegistrationDAO.updateExpiredRegistrationsAndBeds();
 
             int roomId = Integer.parseInt(roomIdParam);
 

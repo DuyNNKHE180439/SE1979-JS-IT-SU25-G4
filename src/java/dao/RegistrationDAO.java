@@ -110,7 +110,7 @@ public class RegistrationDAO {
                 + "FROM Registrations r "
                 + "JOIN Rooms rm ON r.RoomID = rm.RoomID "
                 + "JOIN Beds b ON r.BedID = b.BedID "
-                + "WHERE r.StudentID = ?";
+                + "WHERE r.StudentID = ? AND r.Status = 'Pending'";
 
         try (PreparedStatement ps = DBContext.getInstance().getConnection().prepareStatement(sql)) {
             ps.setInt(1, studentId);
@@ -247,7 +247,7 @@ public class RegistrationDAO {
         return list;
     }
 
-    public static void updateRegistrationByApprove(int regeId,int userId ,String status) {
+    public static void updateRegistrationByApprove(int regeId, int userId, String status) {
         DBContext db = DBContext.getInstance();
         try {
             String sql = "UPDATE dbo.Registrations \n"
@@ -262,6 +262,48 @@ public class RegistrationDAO {
             statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static int updateExpiredRegistrationsAndBeds() {
+        String updateBedsSql = """
+        UPDATE Beds
+        SET Status = 'Available'
+        WHERE BedID IN (
+            SELECT BedID
+            FROM Registrations
+            WHERE EndDate < GETDATE() AND Status = 'Complete'
+        )
+        AND Status = 'Occupied'
+        """;
+
+        String updateRegistrationsSql = """
+        UPDATE Registrations
+        SET Status = 'Expired', UpdatedAt = CURRENT_TIMESTAMP
+        WHERE EndDate < GETDATE() AND Status = 'Complete'
+        """;
+
+        try (Connection conn = DBContext.getInstance().getConnection()) {
+            conn.setAutoCommit(false); // Transaction để đồng bộ
+
+            // Update Beds
+            int affectedBeds;
+            try (PreparedStatement psBeds = conn.prepareStatement(updateBedsSql)) {
+                affectedBeds = psBeds.executeUpdate();
+            }
+
+            // Update Registrations
+            int affectedRegs;
+            try (PreparedStatement psRegs = conn.prepareStatement(updateRegistrationsSql)) {
+                affectedRegs = psRegs.executeUpdate();
+            }
+
+            conn.commit();
+            System.out.println("Beds updated: " + affectedBeds + ", Registrations expired: " + affectedRegs);
+            return affectedBeds;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 
