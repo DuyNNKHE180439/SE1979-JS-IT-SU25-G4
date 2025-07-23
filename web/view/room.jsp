@@ -457,7 +457,7 @@
                 <i class="fa-solid fa-bars"></i>
             </div>
             <div class="logo">
-                <img src="${pageContext.request.contextPath}/images/logo.png" alt="On Campus Dormitory Logo" />
+                <img src="${pageContext.request.contextPath}/images/logo.png" alt="Logo Ký túc xá" />
             </div>
             <div class="notification" id="notification">
                 <i class="fa-solid fa-bell"></i>
@@ -481,15 +481,15 @@
         <jsp:include page="slider.jsp" />
 
         <div class="main" id="main">
-            <h2>Dormitory Room List</h2>
+            <h2>Danh sách phòng ký túc xá</h2>
 
-            <!-- Search form -->
+            <!-- Form tìm kiếm -->
             <form class="search-form" action="${pageContext.request.contextPath}/room" method="get">
-                <input type="text" name="search" placeholder="Search by room number or status..." value="${param.search}"/>
-                <button type="submit">Search</button>
+                <input type="text" name="search" placeholder="Tìm theo số phòng..." value="${param.search}" />
+                <button type="submit">Tìm kiếm</button>
             </form>
 
-            <!-- Notification after booking -->
+            <!-- Thông báo sau khi đặt phòng -->
             <c:if test="${not empty message}">
                 <div class="message">${message}</div>
             </c:if>
@@ -497,48 +497,57 @@
                 <div class="message error">${error}</div>
             </c:if>
 
-            <!-- Room list -->
+            <!-- Danh sách phòng -->
             <div class="room-list">
                 <c:forEach var="room" items="${rooms}">
                     <div class="room-card">
                         <c:choose>
                             <c:when test="${not empty room.roomImagePath}">
-                                <img src="${pageContext.request.contextPath}/${room.roomImagePath}" alt="Room Image">
+                                <img src="${pageContext.request.contextPath}/${room.roomImagePath}" alt="Hình ảnh phòng">
                             </c:when>
                             <c:otherwise>
                                 <div class="no-image">
-                                    <span>No Image</span>
+                                    <span>Không có hình ảnh</span>
                                 </div>
                             </c:otherwise>
                         </c:choose>
                         <div class="content">
-                            <h3>Room ${room.roomNumber}</h3>
-                            <p><strong>Capacity:</strong> ${room.capacity} people</p>
-                            <p><strong>Current Occupancy:</strong> <c:out value="${room.currentOccupancy != null ? room.currentOccupancy : 0}"/> people</p>
-                            <p><strong>Status:</strong>
+                            <h3>Phòng ${room.roomNumber}</h3>
+                            <p><strong>Sức chứa:</strong> ${room.capacity} người</p>
+                            <p><strong>Đang ở:</strong> 
+                                <c:out value="${room.currentOccupancy != null ? room.currentOccupancy : 0}" /> người
+                            </p>
+                            <p><strong>Trạng thái:</strong>
                                 <span class="status ${room.currentOccupancy >= room.capacity ? 'full' : 'available'}">
                                     <i class="fa-solid fa-circle"></i>
-                                    ${room.currentOccupancy >= room.capacity ? 'Full' : room.status}
+                                    <c:choose>
+                                        <c:when test="${room.currentOccupancy >= room.capacity}">
+                                            Đầy
+                                        </c:when>
+                                        <c:otherwise>
+                                            Còn trống
+                                        </c:otherwise>
+                                    </c:choose>
                                 </span>
                             </p>
                             <a href="${pageContext.request.contextPath}/roomDetail?roomId=${room.roomID}" class="detail-btn">
-                                View Details
+                                Xem chi tiết
                             </a>
                         </div>
                     </div>
                 </c:forEach>
             </div>
 
-            <!-- Pagination -->
+            <!-- Phân trang -->
             <div class="pagination">
                 <c:if test="${currentPage > 1}">
-                    <a href="${pageContext.request.contextPath}/room?page=${currentPage - 1}&search=${param.search}">Previous</a>
+                    <a href="${pageContext.request.contextPath}/room?page=${currentPage - 1}&search=${param.search}">Trước</a>
                 </c:if>
                 <c:forEach begin="1" end="${totalPages}" var="i">
                     <a href="${pageContext.request.contextPath}/room?page=${i}&search=${param.search}" class="${currentPage == i ? 'active' : ''}">${i}</a>
                 </c:forEach>
                 <c:if test="${currentPage < totalPages}">
-                    <a href="${pageContext.request.contextPath}/room?page=${currentPage + 1}&search=${param.search}">Next</a>
+                    <a href="${pageContext.request.contextPath}/room?page=${currentPage + 1}&search=${param.search}">Sau</a>
                 </c:if>
             </div>
         </div>
