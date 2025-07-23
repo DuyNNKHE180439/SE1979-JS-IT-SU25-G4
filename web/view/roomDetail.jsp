@@ -391,7 +391,7 @@
                 <i class="fa-solid fa-bars"></i>
             </div>
             <div class="logo">
-                <img src="${pageContext.request.contextPath}/images/logo.png" alt="On Campus Dormitory Logo" />
+                <img src="${pageContext.request.contextPath}/images/logo.png" alt="Logo Ký túc xá" />
             </div>
             <div class="notification" id="notification">
                 <i class="fa-solid fa-bell"></i>
@@ -415,42 +415,42 @@
         <jsp:include page="slider.jsp" />
 
         <div class="main" id="main">
-            <h2>Dormitory Room Detail</h2>
+            <h2>Chi tiết phòng ký túc xá</h2>
             <c:choose>
                 <c:when test="${not empty room}">
                     <c:choose>
                         <c:when test="${not empty room.roomImagePath}">
-                            <img src="${pageContext.request.contextPath}/${room.roomImagePath}" alt="Room Image" class="room-image">
+                            <img src="${pageContext.request.contextPath}/${room.roomImagePath}" alt="Hình ảnh phòng" class="room-image">
                         </c:when>
                         <c:otherwise>
                             <div class="no-image">
-                                <span>No Room Image</span>
+                                <span>Không có hình ảnh phòng</span>
                             </div>
                         </c:otherwise>
                     </c:choose>
 
                     <div class="room-info">
-                        <h2>Room ${room.roomNumber}</h2>
-                        <p><strong>Capacity:</strong> ${room.capacity} people</p>
-                        <p><strong>Current Occupancy:</strong> ${room.currentOccupancy != null ? room.currentOccupancy : 0} people</p>
-                        <p><strong>Status:</strong> 
+                        <h2>Phòng ${room.roomNumber}</h2>
+                        <p><strong>Sức chứa:</strong> ${room.capacity} người</p>
+                        <p><strong>Đang ở:</strong> ${room.currentOccupancy != null ? room.currentOccupancy : 0} người</p>
+                        <p><strong>Trạng thái:</strong> 
                             <span style="color: ${room.status eq 'Full' ? '#e53e3e' : '#28a745'}; font-weight: 500;">
-                                ${room.status}
+                                ${room.status eq 'Full' ? 'Đầy' : 'Còn trống'}
                             </span>
                         </p>
                     </div>
 
-                    <h3>Bed List</h3>
+                    <h3>Danh sách giường</h3>
                     <c:choose>
                         <c:when test="${not empty beds}">
                             <table class="beds-table">
                                 <thead>
                                     <tr>
-                                        <th>Bed Number</th>
-                                        <th>Position</th>
-                                        <th>Price (VND)</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th>Số giường</th>
+                                        <th>Vị trí</th>
+                                        <th>Giá (VND)</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -462,10 +462,10 @@
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${bed.status eq 'Available'}">
-                                                        <span class="status-available"><i class="fa-solid fa-circle"></i> Available</span>
+                                                        <span class="status-available"><i class="fa-solid fa-circle"></i> Còn trống</span>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <span class="status-occupied"><i class="fa-solid fa-circle"></i> Occupied</span>
+                                                        <span class="status-occupied"><i class="fa-solid fa-circle"></i> Đã có người</span>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </td>
@@ -474,7 +474,7 @@
                                                     <form action="${pageContext.request.contextPath}/register-bed" method="get" style="margin: 0;">
                                                         <input type="hidden" name="bedId" value="${bed.bedID}" />
                                                         <button type="submit" style="padding: 6px 12px; background-color: #f97316; border: none; color: white; border-radius: 4px; cursor: pointer;">
-                                                            Book Bed
+                                                            Đăng ký
                                                         </button>
                                                     </form>
                                                 </c:if>
@@ -485,14 +485,14 @@
                             </table>
                         </c:when>
                         <c:otherwise>
-                            <p>No beds are registered for this room.</p>
+                            <p>Không có giường nào được đăng ký cho phòng này.</p>
                         </c:otherwise>
                     </c:choose>
 
-                    <a href="${pageContext.request.contextPath}/room" class="back-btn">← Back to Room List</a>
+                    <a href="${pageContext.request.contextPath}/room" class="back-btn">← Quay lại danh sách phòng</a>
                 </c:when>
                 <c:otherwise>
-                    <p>Room information not found.</p>
+                    <p>Không tìm thấy thông tin phòng.</p>
                 </c:otherwise>
             </c:choose>
         </div>
