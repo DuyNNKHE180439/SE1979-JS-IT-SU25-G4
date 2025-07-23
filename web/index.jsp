@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -58,22 +59,21 @@
 
                 <div class="row" style="margin-bottom:5px;">
 
-
                     <div class="col-md-3">
                         <div class="sm-st clearfix">
                             <span class="sm-st-icon st-red"><i class="fa fa-check-square-o"></i></span>
                             <div class="sm-st-info">
-                                <span>3200</span>
-                                Total Tasks
+                                <span>${totalRegistrations}</span>
+                                Tổng số yêu cầu 
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="sm-st clearfix">
-                            <span class="sm-st-icon st-violet"><i class="fa fa-envelope-o"></i></span>
+                            <span class="sm-st-icon st-violet"><i class="fa fa-home"></i></span>
                             <div class="sm-st-info">
-                                <span>2200</span>
-                                Total Messages
+                                <span>${totalRooms}</span>
+                                Tổng số phòng
                             </div>
                         </div>
                     </div>
@@ -81,450 +81,188 @@
                         <div class="sm-st clearfix">
                             <span class="sm-st-icon st-blue"><i class="fa fa-dollar"></i></span>
                             <div class="sm-st-info">
-                                <span>100,320</span>
-                                Total Profit
+                                <span> <fmt:formatNumber value="${totalRevenue}" type="number" groupingUsed="true" /> VNĐ</span>
+                                Tổng số doanh thu
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="sm-st clearfix">
-                            <span class="sm-st-icon st-green"><i class="fa fa-paperclip"></i></span>
+                            <span class="sm-st-icon st-green"><i class="fa fa-users"></i></span>
                             <div class="sm-st-info">
-                                <span>4567</span>
-                                Total Documents
+                                <span>${totalOccupants}</span>
+                                Tổng số người ở 
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Main row -->
-                <div class="row">
+                <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
+                <div class="row">
                     <div class="col-md-8">
-                        <!--earning graph start-->
                         <section class="panel">
-                            <header class="panel-heading">
-                                Earning Graph
-                            </header>
+                            <header class="panel-heading">Biểu đồ doanh thu theo tháng</header>
                             <div class="panel-body">
-                                <canvas id="linechart" width="600" height="330"></canvas>
+                                <canvas id="barchart" width="600" height="330"></canvas>
                             </div>
                         </section>
-                        <!--earning graph end-->
-
                     </div>
+
                     <div class="col-lg-4">
-
-                        <!--chat start-->
                         <section class="panel">
-                            <header class="panel-heading">
-                                Notifications
-                            </header>
-                            <div class="panel-body" id="noti-box">
-
-                                <div class="alert alert-block alert-danger">
-                                    <button data-dismiss="alert" class="close close-sm" type="button">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                    <strong>Oh snap!</strong> Change a few things up and try submitting again.
-                                </div>
-                                <div class="alert alert-success">
-                                    <button data-dismiss="alert" class="close close-sm" type="button">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                    <strong>Well done!</strong> You successfully read this important alert message.
-                                </div>
-                                <div class="alert alert-info">
-                                    <button data-dismiss="alert" class="close close-sm" type="button">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                    <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
-                                </div>
-                                <div class="alert alert-warning">
-                                    <button data-dismiss="alert" class="close close-sm" type="button">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                    <strong>Warning!</strong> Best check yo self, you're not looking too good.
-                                </div>
-
-
-                                <div class="alert alert-block alert-danger">
-                                    <button data-dismiss="alert" class="close close-sm" type="button">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                    <strong>Oh snap!</strong> Change a few things up and try submitting again.
-                                </div>
-                                <div class="alert alert-success">
-                                    <button data-dismiss="alert" class="close close-sm" type="button">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                    <strong>Well done!</strong> You successfully read this important alert message.
-                                </div>
-                                <div class="alert alert-info">
-                                    <button data-dismiss="alert" class="close close-sm" type="button">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                    <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
-                                </div>
-                                <div class="alert alert-warning">
-                                    <button data-dismiss="alert" class="close close-sm" type="button">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                    <strong>Warning!</strong> Best check yo self, you're not looking too good.
-                                </div>
-
-
-
-                            </div>
-                        </section>
-
-
-
-                    </div>
-
-
-                </div>
-                <div class="row">
-
-                    <div class="col-md-8">
-                        <section class="panel">
-                            <header class="panel-heading">
-                                Work Progress
-                            </header>
-                            <div class="panel-body table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Project</th>
-                                            <th>Manager</th>
-                                            <!-- <th>Client</th> -->
-                                            <th>Deadline</th>
-                                            <!-- <th>Price</th> -->
-                                            <th>Status</th>
-                                            <th>Progress</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Facebook</td>
-                                            <td>Mark</td>
-                                            <!-- <td>Steve</td> -->
-                                            <td>10/10/2014</td>
-                                            <!-- <td>$1500</td> -->
-                                            <td><span class="label label-danger">in progress</span></td>
-                                            <td><span class="badge badge-info">50%</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Twitter</td>
-                                            <td>Evan</td>
-                                            <!-- <td>Darren</td> -->
-                                            <td>10/8/2014</td>
-                                            <!-- <td>$1500</td> -->
-                                            <td><span class="label label-success">completed</span></td>
-                                            <td><span class="badge badge-success">100%</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Google</td>
-                                            <td>Larry</td>
-                                            <!-- <td>Nick</td> -->
-                                            <td>10/12/2014</td>
-                                            <!-- <td>$2000</td> -->
-                                            <td><span class="label label-warning">in progress</span></td>
-                                            <td><span class="badge badge-warning">75%</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>LinkedIn</td>
-                                            <td>Allen</td>
-                                            <!-- <td>Rock</td> -->
-                                            <td>10/01/2015</td>
-                                            <!-- <td>$2000</td> -->
-                                            <td><span class="label label-info">in progress</span></td>
-                                            <td><span class="badge badge-info">65%</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>Tumblr</td>
-                                            <td>David</td>
-                                            <!-- <td>HHH</td> -->
-                                            <td>01/11/2014</td>
-                                            <!-- <td>$2000</td> -->
-                                            <td><span class="label label-warning">in progress</span></td>
-                                            <td><span class="badge badge-danger">95%</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td>
-                                            <td>Tesla</td>
-                                            <td>Musk</td>
-                                            <!-- <td>HHH</td> -->
-                                            <td>01/11/2014</td>
-                                            <!-- <td>$2000</td> -->
-                                            <td><span class="label label-info">in progress</span></td>
-                                            <td><span class="badge badge-success">95%</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>7</td>
-                                            <td>Ghost</td>
-                                            <td>XXX</td>
-                                            <!-- <td>HHH</td> -->
-                                            <td>01/11/2014</td>
-                                            <!-- <td>$2000</td> -->
-                                            <td><span class="label label-info">in progress</span></td>
-                                            <td><span class="badge badge-success">95%</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </section>
-
-
-                    </div><!--end col-6 -->
-                    <div class="col-md-4">
-                        <section class="panel">
-                            <header class="panel-heading">
-                                Twitter Feed
-                            </header>
+                            <header class="panel-heading">Tỷ lệ hoàn thành và hủy yêu cầu phòng</header>
                             <div class="panel-body">
-                                <div class="twt-area">
-                                    <form action="#" method="post">
-                                        <textarea class="form-control" name="profile-tweet" placeholder="Share something on Twitter.." rows="3"></textarea>
-
-                                        <div class="clearfix">
-                                            <button class="btn btn-sm btn-primary pull-right" type="submit">
-                                                <i class="fa fa-twitter"></i>
-                                                Tweet
-                                            </button>
-                                            <a class="btn btn-link btn-icon fa fa-location-arrow" data-original-title="Add Location" data-placement="bottom" data-toggle="tooltip" href=
-                                               "#" style="text-decoration:none;" title=""></a>
-                                            <a class="btn btn-link btn-icon fa fa-camera" data-original-title="Add Photo" data-placement="bottom" data-toggle="tooltip" href="#"
-                                               style="text-decoration:none;" title=""></a>
-                                        </div>
-                                    </form>
-                                </div>
-                                <ul class="media-list">
-                                    <li class="media">
-                                        <a href="#" class="pull-left">
-                                            <img src="img/26115.jpg" alt="Avatar" class="img-circle" width="64" height="64">
-                                        </a>
-                                        <div class="media-body">
-                                            <span class="text-muted pull-right">
-                                                <small><em>30 min ago</em></small>
-                                            </span>
-                                            <a href="page_ready_user_profile.php">
-                                                <strong>John Doe</strong>
-                                            </a>
-                                            <p>
-                                                In hac <a href="#">habitasse</a> platea dictumst. Proin ac nibh rutrum lectus rhoncus eleifend.
-                                                <a href="#" class="text-danger">
-                                                    <strong>#dev</strong>
-                                                </a>
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li class="media">
-                                        <a href="#" class="pull-left">
-                                            <img src="img/26115.jpg" alt="Avatar" class="img-circle" width="64" height="64">
-                                        </a>
-                                        <div class="media-body">
-                                            <span class="text-muted pull-right">
-                                                <small><em>30 min ago</em></small>
-                                            </span>
-                                            <a href="page_ready_user_profile.php">
-                                                <strong>John Doe</strong>
-                                            </a>
-                                            <p>
-                                                In hac <a href="#">habitasse</a> platea dictumst. Proin ac nibh rutrum lectus rhoncus eleifend.
-                                                <a href="#" class="text-danger">
-                                                    <strong>#design</strong>
-                                                </a>
-                                            </p>
-                                        </div>
-                                    </li>
-                                </ul>
+                                <canvas id="piechart" width="300" height="300"></canvas>
                             </div>
                         </section>
                     </div>
-
                 </div>
-                <div class="row">
-                    <div class="col-md-5">
-                        <div class="panel">
-                            <header class="panel-heading">
-                                Teammates
-                            </header>
 
-                            <ul class="list-group teammates">
-                                <li class="list-group-item">
-                                    <a href=""><img src="img/26115.jpg" width="50" height="50"></a>
-                                    <span class="pull-right label label-danger inline m-t-15">Admin</span>
-                                    <a href="">Damon Parker</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <a href=""><img src="img/26115.jpg"  width="50" height="50"></a>
-                                    <span class="pull-right label label-info inline m-t-15">Member</span>
-                                    <a href="">Joe Waston</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <a href=""><img src="img/26115.jpg"  width="50" height="50"></a>
-                                    <span class="pull-right label label-warning inline m-t-15">Editor</span>
-                                    <a href="">Jannie Dvis</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <a href=""><img src="img/26115.jpg"  width="50" height="50"></a>
-                                    <span class="pull-right label label-warning inline m-t-15">Editor</span>
-                                    <a href="">Emma Welson</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <a href=""><img src="img/26115.jpg"  width="50" height="50"></a>
-                                    <span class="pull-right label label-success inline m-t-15">Subscriber</span>
-                                    <a href="">Emma Welson</a>
-                                </li>
-                            </ul>
-                            <div class="panel-footer bg-white">
-                                <!-- <span class="pull-right badge badge-info">32</span> -->
-                                <button class="btn btn-primary btn-addon btn-sm">
-                                    <i class="fa fa-plus"></i>
-                                    Add Teammate
-                                </button>
-                            </div>
+                <script>
+                    // ===== Bar Chart (Doanh thu) =====
+                    const barLabels = [
+                    <c:forEach var="r" items="${revenueList}" varStatus="loop">
+                    '<c:out value="${r.month}"/>'<c:if test="${!loop.last}">,</c:if>
+                    </c:forEach>
+                    ];
+                    const barData = [
+                    <c:forEach var="r" items="${revenueList}" varStatus="loop">
+                        <c:out value="${r.revenue}"/><c:if test="${!loop.last}">,</c:if>
+                    </c:forEach>
+                    ];
+
+                    new Chart(document.getElementById('barchart'), {
+                        type: 'bar',
+                        data: {
+                            labels: barLabels,
+                            datasets: [{
+                                    label: 'Doanh thu (VNĐ)',
+                                    data: barData,
+                                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                    borderWidth: 1
+                                }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: {title: {display: true, text: 'Tháng'}},
+                                y: {beginAtZero: true, title: {display: true, text: 'Doanh thu (VNĐ)'}}
+                            }
+                        }
+                    });
+
+                    // ===== Pie Chart (Tỷ lệ hoàn thành vs hủy) =====
+                    const completed = parseInt('${completedCount}') || 0;
+                    const rejected = parseInt('${rejectedCount}') || 0;
+
+                    const pieData = [completed, rejected];
+                    const pieLabels = ['Hoàn thành', 'Hủy'];
+
+                    new Chart(document.getElementById('piechart'), {
+                        type: 'pie',
+                        data: {
+                            labels: pieLabels,
+                            datasets: [{
+                                    data: pieData,
+                                    backgroundColor: ['#4CAF50', '#F44336'],
+                                    borderColor: ['#388E3C', '#D32F2F'],
+                                    borderWidth: 1
+                                }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {position: 'bottom'},
+                                tooltip: {
+                                    callbacks: {
+                                        label: function (context) {
+                                            const value = context.raw;
+                                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                            const percent = Math.round((value / total) * 100);
+                                            return context.label + ': ' + value + ' (' + percent + '%)';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                </script>
+
+                <div class="col-md-12">
+                    <section class="panel">
+                        <header class="panel-heading">Sức chứa và số người ở từng phòng</header>
+                        <div class="panel-body">
+                            <canvas id="roomchart" width="900" height="400"></canvas>
                         </div>
-                    </div>
-                    <div class="col-md-7">
-                        <section class="panel tasks-widget">
-                            <header class="panel-heading">
-                                Todo list
-                            </header>
-                            <div class="panel-body">
-
-                                <div class="task-content">
-
-                                    <ul class="task-list">
-                                        <li>
-                                            <div class="task-checkbox">
-                                                <!-- <input type="checkbox" class="list-child" value=""  /> -->
-                                                <input type="checkbox" class="flat-grey list-child"/>
-                                                <!-- <input type="checkbox" class="square-grey"/> -->
-                                            </div>
-                                            <div class="task-title">
-                                                <span class="task-title-sp">Director is Modern Dashboard</span>
-                                                <span class="label label-success">2 Days</span>
-                                                <div class="pull-right hidden-phone">
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-check"></i></button>
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-times"></i></button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="task-checkbox">
-                                                <!-- <input type="checkbox" class="list-child" value=""  /> -->
-                                                <input type="checkbox" class="flat-grey"/>
-                                            </div>
-                                            <div class="task-title">
-                                                <span class="task-title-sp">Fully Responsive & Bootstrap 3.0.2 Compatible</span>
-                                                <span class="label label-danger">Done</span>
-                                                <div class="pull-right hidden-phone">
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-check"></i></button>
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-times"></i></button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="task-checkbox">
-                                                <!-- <input type="checkbox" class="list-child" value=""  /> -->
-                                                <input type="checkbox" class="flat-grey"/>
-                                            </div>
-                                            <div class="task-title">
-                                                <span class="task-title-sp">Latest Design Concept</span>
-                                                <span class="label label-warning">Company</span>
-                                                <div class="pull-right hidden-phone">
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-check"></i></button>
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-times"></i></button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="task-checkbox">
-                                                <!-- <input type="checkbox" class="list-child" value=""  /> -->
-                                                <input type="checkbox" class="flat-grey"/>
-                                            </div>
-                                            <div class="task-title">
-                                                <span class="task-title-sp">Write well documentation for this theme</span>
-                                                <span class="label label-primary">3 Days</span>
-                                                <div class="pull-right hidden-phone">
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-check"></i></button>
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-times"></i></button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="task-checkbox">
-                                                <!-- <input type="checkbox" class="list-child" value=""  /> -->
-                                                <input type="checkbox" class="flat-grey"/>
-                                            </div>
-                                            <div class="task-title">
-                                                <span class="task-title-sp">Don't bother to download this Dashbord</span>
-                                                <span class="label label-inverse">Now</span>
-                                                <div class="pull-right">
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-check"></i></button>
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-times"></i></button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="task-checkbox">
-                                                <!-- <input type="checkbox" class="list-child" value=""  /> -->
-                                                <input type="checkbox" class="flat-grey"/>
-                                            </div>
-                                            <div class="task-title">
-                                                <span class="task-title-sp">Give feedback for the template</span>
-                                                <span class="label label-success">2 Days</span>
-                                                <div class="pull-right hidden-phone">
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-check"></i></button>
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-times"></i></button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="task-checkbox">
-                                                <!-- <input type="checkbox" class="list-child" value=""  /> -->
-                                                <input type="checkbox" class="flat-grey"/>
-                                            </div>
-                                            <div class="task-title">
-                                                <span class="task-title-sp">Tell your friends about this admin template</span>
-                                                <span class="label label-danger">Now</span>
-                                                <div class="pull-right hidden-phone">
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-check"></i></button>
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-default btn-xs"><i class="fa fa-times"></i></button>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                    </ul>
-                                </div>
-
-                                <div class=" add-task-row">
-                                    <a class="btn btn-success btn-sm pull-left" href="#">Add New Tasks</a>
-                                    <a class="btn btn-default btn-sm pull-right" href="#">See All Tasks</a>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
+                    </section>
                 </div>
+                <script>
+                    // ===== Bar Chart for Rooms (Sức chứa vs Người ở) =====
+                    const roomLabels = [
+                    <c:forEach var="room" items="${roomList}" varStatus="loop">
+                    '<c:out value="${room.roomNumber}"/>'<c:if test="${!loop.last}">,</c:if>
+                    </c:forEach>
+                    ];
+
+                    const capacityData = [
+                    <c:forEach var="room" items="${roomList}" varStatus="loop">
+                        <c:out value="${room.capacity}"/><c:if test="${!loop.last}">,</c:if>
+                    </c:forEach>
+                    ];
+
+                    const occupancyData = [
+                    <c:forEach var="room" items="${roomList}" varStatus="loop">
+                        <c:out value="${room.currentOccupancy}"/><c:if test="${!loop.last}">,</c:if>
+                    </c:forEach>
+                    ];
+
+                    new Chart(document.getElementById('roomchart'), {
+                        type: 'bar',
+                        data: {
+                            labels: roomLabels,
+                            datasets: [
+                                {
+                                    label: 'Sức chứa',
+                                    data: capacityData,
+                                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                                    borderColor: 'rgba(255, 99, 132, 1)',
+                                    borderWidth: 1
+                                },
+                                {
+                                    label: 'Số người ở',
+                                    data: occupancyData,
+                                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                    borderWidth: 1
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: {title: {display: true, text: 'Phòng'}},
+                                y: {beginAtZero: true, title: {display: true, text: 'Số lượng người'}}
+                            },
+                            plugins: {
+                                legend: {
+                                    position: 'top'
+                                },
+                                tooltip: {
+                                    mode: 'index',
+                                    intersect: false
+                                }
+                            }
+                        }
+                    });
+                </script>
+
                 <!-- row end -->
             </section><!-- /.content -->
             <div class="footer-main">
-                Copyright &copy Director, 2014
+                Hệ thống quản lí kí túc xá, 2025
             </div>
         </aside><!-- /.right-side -->
 
@@ -561,18 +299,18 @@
 
     <!-- Director for demo purposes -->
     <script type="text/javascript">
-        $('input').on('ifChecked', function (event) {
-            // var element = $(this).parent().find('input:checkbox:first');
-            // element.parent().parent().parent().addClass('highlight');
-            $(this).parents('li').addClass("task-done");
-            console.log('ok');
-        });
-        $('input').on('ifUnchecked', function (event) {
-            // var element = $(this).parent().find('input:checkbox:first');
-            // element.parent().parent().parent().removeClass('highlight');
-            $(this).parents('li').removeClass("task-done");
-            console.log('not');
-        });
+                    $('input').on('ifChecked', function (event) {
+                        // var element = $(this).parent().find('input:checkbox:first');
+                        // element.parent().parent().parent().addClass('highlight');
+                        $(this).parents('li').addClass("task-done");
+                        console.log('ok');
+                    });
+                    $('input').on('ifUnchecked', function (event) {
+                        // var element = $(this).parent().find('input:checkbox:first');
+                        // element.parent().parent().parent().removeClass('highlight');
+                        $(this).parents('li').removeClass("task-done");
+                        console.log('not');
+                    });
 
     </script>
     <script>
